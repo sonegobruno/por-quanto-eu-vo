@@ -1,0 +1,25 @@
+export const theme = {
+  colors: {
+    neutral_900: '#1F2029',
+    neutral_800: '#353646',
+    neutral_700: '#575757',
+    neutral_600: '#8A8A8A',
+    neutral_500: '#A8A8B3',
+    neutral_400: '#D1D2DC',
+    neutral_300: '#E1E1E6',
+    neutral_200: '#EEEEF2',
+    neutral_100: '#F8F9F9',
+    primary: '#EB2C4C',
+    primary_tint: '#EE7589',
+    primary_shade: '#6B1423',
+    success: '#52c41a',
+    error: '#ff190c',
+    warning: '#faad14',
+    info: '#3AA4DB',
+  },
+  fonts: {
+    roboto_regular: 'Roboto_400Regular',
+    roboto_medium: 'Roboto_500Medium',
+    roboto_bold: 'Roboto_700Bold',
+  },
+};
