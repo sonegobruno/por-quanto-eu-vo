@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "PorQuantoEuVo",
+    "slug": "PorQuantoEuVo",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "PorQuantoEuVo"
+}
