@@ -33,6 +33,7 @@
       "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
       "import/prefer-default-export": "off",
       "react/jsx-props-no-spreading": "off",
+      "no-nested-ternary": "off",
       "react/style-prop-object": "off",
       "react/require-default-props": "off",
       "react/function-component-definition": "off",

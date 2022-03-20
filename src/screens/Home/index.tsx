@@ -20,13 +20,14 @@ export function Home() {
         facilidade
       </S.Title>
 
-      <Input
+      <S.DistanceInput
         label="Distância a ser percorrida (km)"
-        containerStyles={{ marginTop: RFValue(40) }}
+        placeholder="Digite a distância"
         controller={{
           name: 'distance',
           control: form.control,
         }}
+        keyboardType="phone-pad"
       />
     </S.Container>
   );

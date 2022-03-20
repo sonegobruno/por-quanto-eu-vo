@@ -12,10 +12,23 @@ export const Label = styled.Text`
   font-family: ${({ theme }) => theme.fonts.roboto_regular};
 `;
 
-export const styles = {
-  inputContainerStyle: {
+export const stateStyle = {
+  focus: {
+    borderWidth: 2,
+    borderColor: styledTheme.colors.primary,
+  },
+  filled: {
+    borderWidth: 1,
+    borderColor: styledTheme.colors.primary_tint,
+  },
+  normal: {
     borderWidth: 1,
     borderColor: styledTheme.colors.neutral_300,
+  },
+};
+
+export const styles = {
+  inputContainerStyle: {
     backgroundColor: styledTheme.colors.neutral_200,
     borderRadius: 6,
     height: RFValue(44),
