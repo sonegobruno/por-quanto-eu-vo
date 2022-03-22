@@ -10,12 +10,12 @@ import * as S from './styles';
 
 type FormValues = {
   distance: string;
-  gasValue: string;
+  gasAmount: string;
 };
 
 const FormSchema = yup.object().shape({
   distance: yup.string().required('Distância obrigatória'),
-  gasValue: yup.string().required('Valor do combustível obrigatório'),
+  gasAmount: yup.string().required('Valor do combustível obrigatório'),
 });
 
 export function Home() {
@@ -23,14 +23,14 @@ export function Home() {
     resolver: yupResolver(FormSchema),
   });
 
-  const handleSumValues = useCallback(({ distance, gasValue }: FormValues) => {
-    const formattedGasValue = formatMoneyToNumber(gasValue);
+  const handleSumValues = useCallback(({ distance, gasAmount }: FormValues) => {
+    const formattedGasAmount = formatMoneyToNumber(gasAmount);
 
     const spentGasLitens = Number(distance) / AVERAGE_FUEL_CONSUMPTION;
 
-    const spentValue = spentGasLitens * formattedGasValue;
+    const spentAmount = spentGasLitens * formattedGasAmount;
 
-    console.log(spentValue.toFixed(2));
+    console.log(spentAmount.toFixed(2));
   }, []);
 
   return (
@@ -55,7 +55,7 @@ export function Home() {
         label="Qual o valor do combustível?"
         placeholder="R$ 00,00"
         controller={{
-          name: 'gasValue',
+          name: 'gasAmount',
           control: form.control,
         }}
         type="money"
