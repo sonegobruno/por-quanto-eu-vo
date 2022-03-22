@@ -37,6 +37,7 @@
       "react/style-prop-object": "off",
       "react/require-default-props": "off",
       "react/function-component-definition": "off",
+      "no-console": "off",
       "camelcase": "off",
       "import/extensions": [
         "error",

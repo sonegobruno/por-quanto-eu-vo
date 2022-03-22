@@ -13,7 +13,7 @@ export const theme = {
     primary_tint: '#EE7589',
     primary_shade: '#6B1423',
     success: '#52c41a',
-    error: '#ff190c',
+    error: '#FF190C',
     warning: '#faad14',
     info: '#3AA4DB',
   },

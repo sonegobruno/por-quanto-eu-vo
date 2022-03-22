@@ -41,7 +41,13 @@ const InputBase: ForwardRefRenderFunction<any, Props> = (
           field: { onChange, onBlur, value },
           fieldState: { error },
         }) => {
-          const state = isFocused ? 'focus' : value ? 'filled' : 'normal';
+          const state = isFocused
+            ? 'focus'
+            : error?.message
+            ? 'error'
+            : value
+            ? 'filled'
+            : 'normal';
 
           return (
             <ElementInput
@@ -60,8 +66,10 @@ const InputBase: ForwardRefRenderFunction<any, Props> = (
                 S.stateStyle[state],
                 rest.inputContainerStyle,
               ]}
+              inputStyle={[S.styles.inputStyle, rest.inputStyle]}
               labelStyle={[S.styles.labelStyle, rest.labelStyle]}
               containerStyle={[S.styles.containerStyle, rest.containerStyle]}
+              errorStyle={S.styles.errorStyle}
               {...rest}
             />
           );

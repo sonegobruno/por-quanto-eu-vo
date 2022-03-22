@@ -1,0 +1,1 @@
+export const AVERAGE_FUEL_CONSUMPTION = 12.2;
