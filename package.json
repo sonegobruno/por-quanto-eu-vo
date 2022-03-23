@@ -14,7 +14,6 @@
     "@react-native-async-storage/async-storage": "^1.17.0",
     "@react-native-elements/base": "react-native-elements/react-native-elements#4.0.0-rc.0-base",
     "@react-native-elements/themed": "react-native-elements/react-native-elements#4.0.0-rc.0-themed",
-    "@react-navigation/core": "^6.1.1",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.0",
     "expo": "~44.0.2",
