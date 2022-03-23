@@ -37,6 +37,7 @@
       "react/style-prop-object": "off",
       "react/require-default-props": "off",
       "react/function-component-definition": "off",
+      "@typescript-eslint/no-explicit-any": "off",
       "default-param-last": "off",
       "no-console": "off",
       "camelcase": "off",

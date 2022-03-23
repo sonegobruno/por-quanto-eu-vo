@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { InputMask } from 'shared/components/Form/Inputs/InputMask';
 import { formatCurrency, formatMoneyToNumber } from 'shared/utils/formatData';
 import { AVERAGE_FUEL_CONSUMPTION } from 'shared/contants/averageFuelConsumption';
+import { useNavigation } from '@react-navigation/native';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
@@ -30,6 +31,7 @@ export function Home() {
   const form = useForm<FormValues>({
     resolver: yupResolver(FormSchema),
   });
+  const navigation = useNavigation<any>();
 
   const [demandSelected, setDemandSelected] = useState<DemandOptionsProps | ''>(
     '',
@@ -56,9 +58,13 @@ export function Home() {
       const spentAmount =
         spentGasLitens * formattedGasAmount * DEMAND_OPTIONS[demandSelected];
 
-      console.log(formatCurrency(spentAmount));
+      const amountCurrency = formatCurrency(spentAmount);
+
+      navigation.navigate('GasPriceShow', {
+        amountCurrency,
+      });
     },
-    [demandSelected],
+    [demandSelected, navigation],
   );
 
   return (
