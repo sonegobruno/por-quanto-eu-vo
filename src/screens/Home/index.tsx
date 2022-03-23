@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { InputMask } from 'shared/components/Form/Inputs/InputMask';
-import { formatMoneyToNumber } from 'shared/utils/formatData';
+import { formatCurrency, formatMoneyToNumber } from 'shared/utils/formatData';
 import { AVERAGE_FUEL_CONSUMPTION } from 'shared/contants/averageFuelConsumption';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
@@ -56,7 +56,7 @@ export function Home() {
       const spentAmount =
         spentGasLitens * formattedGasAmount * DEMAND_OPTIONS[demandSelected];
 
-      console.log(spentAmount.toFixed(2));
+      console.log(formatCurrency(spentAmount));
     },
     [demandSelected],
   );
