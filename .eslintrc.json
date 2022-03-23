@@ -38,6 +38,7 @@
       "react/require-default-props": "off",
       "react/function-component-definition": "off",
       "@typescript-eslint/no-explicit-any": "off",
+      "global-require": "off",
       "default-param-last": "off",
       "no-console": "off",
       "camelcase": "off",

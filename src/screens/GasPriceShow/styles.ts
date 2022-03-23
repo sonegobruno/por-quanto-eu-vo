@@ -16,6 +16,11 @@ export const Container = styled(SafeAreaView).attrs({
   flex: 1;
 `;
 
+export const AnimationWrapper = styled.View`
+  width: 100%;
+  align-items: center;
+`;
+
 export const Title = styled(Text)`
   color: ${({ theme }) => theme.colors.neutral_500};
   font-size: ${RFValue(24)}px;
