@@ -18,11 +18,11 @@ export const Title = styled(ElementText)`
 `;
 
 export const DistanceInput = styled(Input).attrs({
-  containerStyles: { marginTop: RFValue(40) },
+  containerStyles: { marginTop: RFValue(32) },
 })``;
 
 export const SumButton = styled(PrimaryButton).attrs({
   containerStyle: {
-    marginTop: RFValue(16),
+    marginTop: RFValue(48),
   },
 })``;

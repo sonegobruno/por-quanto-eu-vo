@@ -8,11 +8,13 @@ type DemandOptionsProps = 'Somente ida' | 'Bate e volta';
 type Props = {
   onChangeDemandSelected: (demandSelected: DemandOptionsProps) => void;
   demandSelected: DemandOptionsProps | '';
+  showError: boolean;
 };
 
 export function DemandWrapper({
   demandSelected,
   onChangeDemandSelected,
+  showError,
 }: Props) {
   return (
     <>
@@ -32,6 +34,12 @@ export function DemandWrapper({
           onPress={() => onChangeDemandSelected('Bate e volta')}
         />
       </S.DemandButtonContainer>
+
+      {showError && (
+        <S.DemandError>
+          opsss, você esqueceu de selecionar uma cobrança
+        </S.DemandError>
+      )}
     </>
   );
 }

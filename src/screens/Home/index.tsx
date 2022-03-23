@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -34,10 +34,20 @@ export function Home() {
   const [demandSelected, setDemandSelected] = useState<DemandOptionsProps | ''>(
     '',
   );
+  const [showDemandError, setShowDemandError] = useState(false);
+
+  useEffect(() => {
+    if (demandSelected !== '') {
+      setShowDemandError(false);
+    }
+  }, [demandSelected]);
 
   const handleSumValues = useCallback(
     ({ distance, gasAmount }: FormValues) => {
-      if (demandSelected === '') return;
+      if (demandSelected === '') {
+        setShowDemandError(true);
+        return;
+      }
 
       const formattedGasAmount = formatMoneyToNumber(gasAmount);
 
@@ -82,6 +92,7 @@ export function Home() {
       <DemandWrapper
         demandSelected={demandSelected}
         onChangeDemandSelected={setDemandSelected}
+        showError={showDemandError}
       />
 
       <S.SumButton

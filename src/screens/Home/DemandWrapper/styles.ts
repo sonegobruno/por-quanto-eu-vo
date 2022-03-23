@@ -8,7 +8,7 @@ export const Demand = styled(ElementText)`
   font-size: ${RFValue(22)}px;
   font-family: ${({ theme }) => theme.fonts.roboto_bold};
   text-align: center;
-  margin-top: ${RFValue(24)}px;
+  margin-top: ${RFValue(6)}px;
 `;
 
 export const DemandButtonContainer = styled.View`
@@ -20,4 +20,12 @@ export const DemandButtonContainer = styled.View`
 
 export const GoButton = styled(DemandButton)`
   margin-left: ${RFValue(16)}px;
+`;
+
+export const DemandError = styled(ElementText)`
+  color: ${({ theme }) => theme.colors.error};
+  font-size: ${RFValue(14)}px;
+  font-family: ${({ theme }) => theme.fonts.roboto_regular};
+  margin-top: ${RFValue(8)}px;
+  text-align: center;
 `;
