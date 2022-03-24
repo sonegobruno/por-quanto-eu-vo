@@ -71,7 +71,7 @@ export function Home() {
 
   return (
     <>
-      <StatusBar style="dark" translucent backgroundColor="#EEEEF2" />
+      <StatusBar style="dark" translucent backgroundColor="#F8F9F9" />
 
       <S.Container>
         <S.Title>
