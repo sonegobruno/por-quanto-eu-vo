@@ -8,7 +8,9 @@ import { PrimaryButton } from 'shared/components/Form/Buttons/PrimaryButton';
 export const Container = styled(KeyboardAwareScrollView).attrs(() => ({
   contentContainerStyle: { padding: RFValue(16), paddingTop: RFValue(56) },
   keyboardShouldPersistTaps: 'handled',
-}))``;
+}))`
+  background: ${({ theme }) => theme.colors.neutral_100};
+`;
 
 export const Title = styled(ElementText)`
   color: ${({ theme }) => theme.colors.neutral_500};

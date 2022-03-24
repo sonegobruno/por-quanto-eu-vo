@@ -12,6 +12,7 @@ export const Container = styled(SafeAreaView).attrs({
 })`
   padding: ${Platform.OS === 'ios' ? 0 : getStatusBarHeight()}px
     ${RFValue(24)}px 0 ${RFValue(24)}px;
+  background: ${({ theme }) => theme.colors.neutral_100};
 
   flex: 1;
 `;

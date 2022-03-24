@@ -2,11 +2,13 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigation } from '@react-navigation/native';
 
-import { InputMask } from 'shared/components/Form/Inputs/InputMask';
 import { formatCurrency, formatMoneyToNumber } from 'shared/utils/formatData';
 import { AVERAGE_FUEL_CONSUMPTION } from 'shared/contants/averageFuelConsumption';
-import { useNavigation } from '@react-navigation/native';
+
+import { InputMask } from 'shared/components/Form/Inputs/InputMask';
+import { StatusBar } from 'shared/components/StatusBar';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
@@ -68,43 +70,47 @@ export function Home() {
   );
 
   return (
-    <S.Container>
-      <S.Title>
-        Descubra o valor de {'\n'}
-        combustível gasto com {'\n'}
-        facilidade
-      </S.Title>
+    <>
+      <StatusBar style="dark" translucent backgroundColor="#EEEEF2" />
 
-      <S.DistanceInput
-        label="Distância a ser percorrida (km)"
-        placeholder="Digite a distância"
-        controller={{
-          name: 'distance',
-          control: form.control,
-        }}
-        keyboardType="phone-pad"
-      />
+      <S.Container>
+        <S.Title>
+          Descubra o valor de {'\n'}
+          combustível gasto com {'\n'}
+          facilidade
+        </S.Title>
 
-      <InputMask
-        label="Qual o valor do combustível?"
-        placeholder="R$ 00,00"
-        controller={{
-          name: 'gasAmount',
-          control: form.control,
-        }}
-        type="money"
-      />
+        <S.DistanceInput
+          label="Distância a ser percorrida (km)"
+          placeholder="Digite a distância"
+          controller={{
+            name: 'distance',
+            control: form.control,
+          }}
+          keyboardType="phone-pad"
+        />
 
-      <DemandWrapper
-        demandSelected={demandSelected}
-        onChangeDemandSelected={setDemandSelected}
-        showError={showDemandError}
-      />
+        <InputMask
+          label="Qual o valor do combustível?"
+          placeholder="R$ 00,00"
+          controller={{
+            name: 'gasAmount',
+            control: form.control,
+          }}
+          type="money"
+        />
 
-      <S.SumButton
-        title="Somar valores"
-        onPress={form.handleSubmit(handleSumValues)}
-      />
-    </S.Container>
+        <DemandWrapper
+          demandSelected={demandSelected}
+          onChangeDemandSelected={setDemandSelected}
+          showError={showDemandError}
+        />
+
+        <S.SumButton
+          title="Somar valores"
+          onPress={form.handleSubmit(handleSumValues)}
+        />
+      </S.Container>
+    </>
   );
 }

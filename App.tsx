@@ -7,7 +7,6 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 
-import { StatusBar } from 'shared/components/StatusBar';
 import { Routes } from './src/routes';
 import AppProviders from './src/context';
 
@@ -24,7 +23,6 @@ export default function App() {
 
   return (
     <AppProviders>
-      <StatusBar style="light" translucent backgroundColor="#6B1423" />
       <Routes />
     </AppProviders>
   );
