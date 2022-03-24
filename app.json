@@ -14,11 +14,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.sonego.porquantoeuvou"
     },
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.sonego.porquantoeuvou"
+    }
   },
   "name": "PorQuantoEuVo"
 }

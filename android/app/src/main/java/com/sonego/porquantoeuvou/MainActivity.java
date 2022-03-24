@@ -1,4 +1,4 @@
-package com.porquantoeuvo;
+package com.sonego.porquantoeuvou;
 
 import android.os.Build;
 import android.os.Bundle;
