@@ -24,7 +24,7 @@ export default function App() {
 
   return (
     <AppProviders>
-      <StatusBar style="light" translucent backgroundColor="#EE7589" />
+      <StatusBar style="light" translucent backgroundColor="#6B1423" />
       <Routes />
     </AppProviders>
   );
