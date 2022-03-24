@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "native:start": "react-native start",
     "native:android": "react-native run-android",
-    "build:android": "cd android && ./gradlew assembleRelease && rm -f PorQuantoEuVou.apk && cp ./android/app/build/outputs/apk/release/app-release.apk ./PorQuantoEuVou.apk",
+    "build:android": "cd android && ./gradlew assembleRelease && rm -f PorQuantoEuVou.apk && cp ./app/build/outputs/apk/release/app-release.apk ../PorQuantoEuVou.apk",
     "clean:android": "cd android && ./gradlew clean"
   },
   "dependencies": {
