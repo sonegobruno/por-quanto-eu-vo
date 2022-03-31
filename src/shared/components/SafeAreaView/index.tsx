@@ -19,7 +19,7 @@ export function SafeAreaView({
   const edges = DEFAULT_EDGES.filter(edge => !omitEdges?.includes(edge));
 
   return (
-    <SAV {...props} edges={edges}>
+    <SAV {...props} edges={edges} testID="safe-area-view">
       {children}
     </SAV>
   );

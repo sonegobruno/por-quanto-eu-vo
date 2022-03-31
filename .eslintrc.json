@@ -40,6 +40,7 @@
       "@typescript-eslint/no-explicit-any": "off",
       "global-require": "off",
       "default-param-last": "off",
+      "import/no-extraneous-dependencies": "off",
       "no-console": "off",
       "camelcase": "off",
       "import/extensions": [
