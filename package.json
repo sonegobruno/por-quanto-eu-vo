@@ -11,7 +11,7 @@
     "native:android": "react-native run-android",
     "build:android": "cd android && ./gradlew assembleRelease && rm -f PorQuantoEuVou.apk && cp ./app/build/outputs/apk/release/app-release.apk ../PorQuantoEuVou.apk",
     "clean:android": "cd android && ./gradlew clean",
-    "test": "jest"
+    "test": "jest --watchAll --coverage"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.2.2",

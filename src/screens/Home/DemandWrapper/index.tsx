@@ -26,12 +26,14 @@ export function DemandWrapper({
           iconName="corner-up-right"
           isSelected={demandSelected === 'Somente ida'}
           onPress={() => onChangeDemandSelected('Somente ida')}
+          testID="demand-button-just-go"
         />
         <S.GoButton
           title={`bate e ${'\n'}volta`}
           iconName="repeat"
           isSelected={demandSelected === 'Bate e volta'}
           onPress={() => onChangeDemandSelected('Bate e volta')}
+          testID="demand-button-go-back"
         />
       </S.DemandButtonContainer>
 

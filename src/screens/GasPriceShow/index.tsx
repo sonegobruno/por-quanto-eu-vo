@@ -3,11 +3,13 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { formatCurrency } from 'shared/utils/formatData';
+
 import { StatusBar } from 'shared/components/StatusBar';
 import * as S from './styles';
 
 type Params = {
-  amountCurrency: string;
+  amountCurrency: number;
 };
 
 export function GasPriceShow() {
@@ -34,9 +36,13 @@ export function GasPriceShow() {
         </S.AnimationWrapper>
 
         <S.Title>Você irá gastar em {'\n'} seu trajeto</S.Title>
-        <S.Amount>{amountCurrency}</S.Amount>
+        <S.Amount>{formatCurrency(amountCurrency)}</S.Amount>
         <S.BackPageText>Deseja somar novos valores?</S.BackPageText>
-        <S.BackButton title="Somar novo valor" onPress={goBack} />
+        <S.BackButton
+          testID="gas-price-show-back-button"
+          title="Somar novo valor"
+          onPress={goBack}
+        />
       </S.Container>
     </>
   );

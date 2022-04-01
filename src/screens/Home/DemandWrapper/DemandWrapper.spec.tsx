@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
 import { theme } from 'styles/theme';
 
@@ -52,7 +52,7 @@ describe('DemandWrapper', () => {
     expect(textButton).toBeTruthy();
   });
 
-  it('should isSelected bate e volta Button', () => {
+  it("should isSelected 'bate e volta' Button", () => {
     let demandSelected = 'Bate e volta' as any;
     const { getByText } = render(
       <DemandWrapper
@@ -72,7 +72,7 @@ describe('DemandWrapper', () => {
     expect(textButton.props.isSelected).toEqual(true);
   });
 
-  it('should isSelected Somente ida Button', () => {
+  it("should isSelected 'Somente ida' Button", () => {
     let demandSelected = 'Somente ida' as any;
     const { getByText } = render(
       <DemandWrapper
@@ -90,5 +90,51 @@ describe('DemandWrapper', () => {
     const textButton = getByText('Somente ida');
 
     expect(textButton.props.isSelected).toEqual(true);
+  });
+
+  it("should select 'somente ida' button when it was pressed", () => {
+    let demandSelected = 'Bate e volta' as any;
+    const mockedOnChangeSelected = jest.fn(newDemandSelected => {
+      demandSelected = newDemandSelected;
+    });
+    const { getByTestId } = render(
+      <DemandWrapper
+        demandSelected={demandSelected}
+        onChangeDemandSelected={mockedOnChangeSelected}
+        showError
+      />,
+      {
+        wrapper: Providers,
+      },
+    );
+
+    const demandButton = getByTestId('demand-button-just-go');
+
+    fireEvent.press(demandButton);
+
+    expect(mockedOnChangeSelected).toBeCalledWith('Somente ida');
+  });
+
+  it("should select 'bate e volta' button when it was pressed", () => {
+    let demandSelected = 'Bate e volta' as any;
+    const mockedOnChangeSelected = jest.fn(newDemandSelected => {
+      demandSelected = newDemandSelected;
+    });
+    const { getByTestId } = render(
+      <DemandWrapper
+        demandSelected={demandSelected}
+        onChangeDemandSelected={mockedOnChangeSelected}
+        showError
+      />,
+      {
+        wrapper: Providers,
+      },
+    );
+
+    const demandButton = getByTestId('demand-button-go-back');
+
+    fireEvent.press(demandButton);
+
+    expect(mockedOnChangeSelected).toBeCalledWith('Bate e volta');
   });
 });
