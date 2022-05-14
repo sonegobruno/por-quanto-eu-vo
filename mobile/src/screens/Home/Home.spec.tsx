@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
-import { render } from '@testing-library/react-native';
+import { fireEvent, render } from '@testing-library/react-native';
 import { ThemeProvider } from 'styled-components/native';
 
 import { theme } from 'styles/theme';
@@ -38,5 +38,21 @@ describe('Home', () => {
     const textButton = getByText('Somar valores');
 
     expect(textButton).toBeTruthy();
+  });
+
+  it('should show error when i not selected a demand', () => {
+    const { getByText, getByTestId } = render(<Home />, {
+      wrapper: Providers,
+    });
+
+    const textError = getByText(
+      'opsss, você esqueceu de selecionar uma cobrança',
+    );
+
+    const submitButton = getByTestId('sum-values-button');
+
+    fireEvent.press(submitButton, { distance: '8', gasAmount: '8' });
+
+    expect(textError).toBeTruthy();
   });
 });

@@ -107,6 +107,7 @@ export function Home() {
         <S.SumButton
           title="Somar valores"
           onPress={form.handleSubmit(handleSumValues)}
+          testID="sum-values-button"
         />
       </S.Container>
     </>
