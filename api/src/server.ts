@@ -4,6 +4,7 @@ import express from 'express';
 import cors from 'cors';
 import "express-async-errors";
 import './shared/container';
+import './database';
 import { router } from "./routes";
 import { handleErrors } from "./middlewares/ handleErrors";
 
