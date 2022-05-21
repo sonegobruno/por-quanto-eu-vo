@@ -1,9 +1,6 @@
-// import { AppError } from '../../../../errors';
 // import { getRepository, Repository } from 'typeorm';
 
-import { User } from "../../entities/User";
 import { IUsersRepository } from "./IUserRepository";
-
 
 class UserRepository implements IUsersRepository{
 
@@ -24,7 +21,7 @@ class UserRepository implements IUsersRepository{
     }
 
     public async list() {
-        return this.users;
+      return this.users;
     }
 }
 
