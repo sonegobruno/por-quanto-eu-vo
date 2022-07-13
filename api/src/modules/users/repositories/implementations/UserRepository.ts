@@ -13,13 +13,16 @@ class UserRepository implements IUsersRepository{
         this.repository = getRepository(User)
     }
 
-    public async list() {
+    public async listUserById(user_id: string) {
       try {
-        const users =  await this.repository.find({
+        const user =  await this.repository.findOne({
+          where: {
+            id: user_id
+          },
           select: ['name', 'email', 'created_at', 'update_at']
         });
 
-        return users
+        return user
       } catch(err) {
         throw new AppError(err);
       }

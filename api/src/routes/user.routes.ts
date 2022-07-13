@@ -1,13 +1,13 @@
 import { Router } from 'express';
 import { CreateUserController } from '../modules/users/useCases/CreateUser/CreateUserController';
-import { ListUserController } from '../modules/users/useCases/ListUser/ListUserController';
+import { ListUserByIdController } from '../modules/users/useCases/ListUser/ListUserByIdController';
 
 const userRoutes = Router();
 
-const listUserController = new ListUserController();
+const listUserByIdController = new ListUserByIdController();
 const createUserController = new CreateUserController();
 
-userRoutes.get('/', listUserController.handle);
+userRoutes.get('/:user_id', listUserByIdController.handle);
 userRoutes.post('/', createUserController.handle);
 
 export { userRoutes }
