@@ -7,7 +7,7 @@ export class ListUserController {
 
         const listUserUseCase = container.resolve(ListUserUseCase);
 
-        const user = await listUserUseCase.execute();
-        return response.json({ user });
+        const users = await listUserUseCase.execute();
+        return response.json({ users });
     }
 }

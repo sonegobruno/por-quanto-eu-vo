@@ -1,7 +1,7 @@
 // import { AppError } from '../../../../errors';
 import { inject, injectable} from 'tsyringe';
-import { User } from '../../../entities/User';
-import { IUsersRepository } from '../../../repositories/implementations/IUserRepository';
+import { User } from '../../entities/User';
+import { IUsersRepository } from '../../repositories/IUserRepository';
 
 @injectable()
 class ListUserUseCase {
