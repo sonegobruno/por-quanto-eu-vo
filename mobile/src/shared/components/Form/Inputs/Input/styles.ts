@@ -18,8 +18,8 @@ export const stateStyle = {
     borderColor: styledTheme.colors.primary_tint,
   },
   filled: {
-    borderWidth: 1,
-    borderColor: styledTheme.colors.primary_tint,
+    borderWidth: 2,
+    borderColor: styledTheme.colors.neutral_400,
   },
   normal: {
     borderWidth: 1,
@@ -56,5 +56,10 @@ export const styles = {
     color: styledTheme.colors.error,
     fontFamily: styledTheme.fonts.roboto_regular,
     fontSize: RFValue(14),
+  },
+  passwordButtonStyle: {
+    size: RFValue(20),
+    color: styledTheme.colors.neutral_700,
+    type: 'feather',
   },
 };

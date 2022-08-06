@@ -6,7 +6,7 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-import { Input as ElementInput, InputProps } from 'react-native-elements';
+import { Icon, Input as ElementInput, InputProps } from 'react-native-elements';
 import { Control, Controller } from 'react-hook-form';
 
 import * as S from './styles';
@@ -19,18 +19,26 @@ interface ControllerProps
 interface Props extends InputProps {
   controller: ControllerProps;
   label?: string;
+  type?: 'text' | 'password';
   containerStyles?: React.ComponentProps<typeof S.Container>['style'];
 }
 
 const InputBase: ForwardRefRenderFunction<any, Props> = (
-  { label = '', containerStyles, controller, ...rest },
+  { label = '', type = 'text', containerStyles, controller, ...rest },
   ref,
 ) => {
   const inputRef = useRef<any>(ref);
   const [isFocused, setIsFocused] = useState(false);
+  const [passwordIsVisible, setPasswordIsVisible] = useState(
+    type !== 'password',
+  );
 
   const toggleFocus = useCallback(() => {
     setIsFocused(prevState => !prevState);
+  }, []);
+
+  const togglePasswordVisible = useCallback(() => {
+    setPasswordIsVisible(prevState => !prevState);
   }, []);
 
   return (
@@ -70,6 +78,17 @@ const InputBase: ForwardRefRenderFunction<any, Props> = (
               labelStyle={[S.styles.labelStyle, rest.labelStyle]}
               containerStyle={[S.styles.containerStyle, rest.containerStyle]}
               errorStyle={S.styles.errorStyle}
+              secureTextEntry={!passwordIsVisible}
+              rightIcon={
+                type === 'password' && (
+                  <Icon
+                    name={passwordIsVisible ? 'eye' : 'eye-off'}
+                    tvParallaxProperties={undefined}
+                    onPress={togglePasswordVisible}
+                    {...S.styles.passwordButtonStyle}
+                  />
+                )
+              }
               {...rest}
             />
           );

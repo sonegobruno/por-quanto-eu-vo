@@ -12,6 +12,8 @@ export const theme = {
     primary: '#EB2C4C',
     primary_tint: '#EE7589',
     primary_shade: '#6B1423',
+    primary_700: '#6B343E',
+    primary_300: '#B8233C',
     success: '#52c41a',
     error: '#FF190C',
     warning: '#faad14',
