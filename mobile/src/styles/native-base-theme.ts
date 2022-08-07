@@ -1,0 +1,44 @@
+import { extendTheme } from 'native-base';
+
+const nativeBaseTheme = {
+  colors: {
+    neutral: {
+      '900': '#1F2029',
+      '800': '#353646',
+      '700': '#575757',
+      '600': '#8A8A8A',
+      '500': '#A8A8B3',
+      '400': '#D1D2DC',
+      '300': '#E1E1E6',
+      '200': '#EEEEF2',
+      '100': '#F8F9F9',
+    },
+    primary: {
+      '100': '#FCE3E9',
+      '200': '#F6A7B7',
+      '300': '#E9637B',
+      '400': '#EB2C4C',
+      '500': '#B0172E',
+      '600': '#660A12',
+      '700': '#4A0D11',
+      '800': '#350E10',
+      '900': '#350E10',
+    }, // 185 96 90 | 186 94 82 | 187 92 69 | 188 86 53 | 189 94 43 | 192 91 36 | 193 82 31 | 194 70 27
+    secondary: {
+      '100': '#FFD8CC',
+      '200': '#FFB7A3',
+      '300': '#FE8E6D',
+      '400': '#F65622',
+    },
+    error: {
+      '500': '#FF190C',
+    },
+  },
+  fonts: {
+    heading: 'Roboto',
+    body: 'Roboto',
+    mono: 'Roboto',
+  },
+};
+
+export default extendTheme(nativeBaseTheme);

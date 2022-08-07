@@ -1,11 +1,11 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { Input } from 'shared/components/Form/Inputs/Input';
 import { StatusBar } from 'shared/components/StatusBar';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Input } from 'shared/components/Form/Inputs/InputNative';
 import Logo from '../../assets/logo.svg';
 import * as S from './styles';
 
@@ -24,7 +24,6 @@ const FormSchema = yup.object().shape({
 });
 
 export function CreateUser() {
-  const ref = useRef();
   const form = useForm<FormValues>({
     resolver: yupResolver(FormSchema),
   });
@@ -45,39 +44,42 @@ export function CreateUser() {
 
         <S.Content>
           <S.Title>Criar conta</S.Title>
+
           <Input
             label="Nome"
-            placeholder="Digite seu nome"
             controller={{
               name: 'name',
               control: form.control,
             }}
+            placeholder="Digite seu nome"
             keyboardType="name-phone-pad"
             returnKeyType="next"
+            onSubmitEditing={() => form.setFocus('email')}
           />
 
           <Input
-            ref={ref}
             label="Email"
-            placeholder="Digite seu email"
             controller={{
               name: 'email',
               control: form.control,
             }}
+            placeholder="Digite seu email"
             keyboardType="email-address"
             returnKeyType="next"
+            onSubmitEditing={() => form.setFocus('password')}
           />
 
           <Input
             label="Senha"
-            placeholder="Digite sua senha"
             controller={{
               name: 'password',
               control: form.control,
             }}
+            placeholder="Digite sua senha"
             type="password"
             keyboardType="visible-password"
             returnKeyType="next"
+            onSubmitEditing={() => form.setFocus('confirmPassword')}
           />
 
           <Input
