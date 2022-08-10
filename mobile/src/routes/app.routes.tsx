@@ -11,16 +11,15 @@ export function AppRoutes() {
   return (
     <Navigator>
       <Screen
-        name="CreateUser"
-        component={CreateUser}
+        name="Home"
+        component={Home}
         options={{
           headerShown: false,
         }}
       />
-
       <Screen
-        name="Home"
-        component={Home}
+        name="CreateUser"
+        component={CreateUser}
         options={{
           headerShown: false,
         }}

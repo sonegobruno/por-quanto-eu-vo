@@ -3,7 +3,6 @@ import { Text as ElementText } from 'react-native-elements';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { Input } from 'shared/components/Form/Inputs/Input';
-import { PrimaryButton } from 'shared/components/Form/Buttons/PrimaryButton';
 
 export const Container = styled(KeyboardAwareScrollView).attrs(() => ({
   contentContainerStyle: { padding: RFValue(16), paddingTop: RFValue(56) },
@@ -21,10 +20,4 @@ export const Title = styled(ElementText)`
 
 export const DistanceInput = styled(Input).attrs({
   containerStyles: { marginTop: RFValue(32) },
-})``;
-
-export const SumButton = styled(PrimaryButton).attrs({
-  containerStyle: {
-    marginTop: RFValue(48),
-  },
 })``;

@@ -6,6 +6,8 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { formatCurrency } from 'shared/utils/formatData';
 
 import { StatusBar } from 'shared/components/StatusBar';
+import { Button } from 'shared/components/Form/Buttons/Button';
+import { Heading } from 'native-base';
 import * as S from './styles';
 
 type Params = {
@@ -35,13 +37,28 @@ export function GasPriceShow() {
           />
         </S.AnimationWrapper>
 
-        <S.Title>Você irá gastar em {'\n'} seu trajeto</S.Title>
-        <S.Amount>{formatCurrency(amountCurrency)}</S.Amount>
-        <S.BackPageText>Deseja somar novos valores?</S.BackPageText>
-        <S.BackButton
+        <Heading
+          color="neutral.500"
+          fontSize="2xl"
+          lineHeight="md"
+          textAlign="center"
+        >
+          Você irá gastar em {'\n'} seu trajeto
+        </Heading>
+
+        <Heading color="primary.500" fontSize="5xl" textAlign="center" mt="8">
+          {formatCurrency(amountCurrency)}
+        </Heading>
+
+        <Heading color="neutral.500" fontSize="lg" textAlign="center" mt="10">
+          Deseja somar novos valores?
+        </Heading>
+
+        <Button
           testID="gas-price-show-back-button"
           title="Somar novo valor"
           onPress={goBack}
+          mt="8"
         />
       </S.Container>
     </>

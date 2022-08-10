@@ -9,6 +9,8 @@ import { AVERAGE_FUEL_CONSUMPTION } from 'shared/contants/averageFuelConsumption
 
 import { InputMask } from 'shared/components/Form/Inputs/InputMask';
 import { StatusBar } from 'shared/components/StatusBar';
+import { Button } from 'shared/components/Form/Buttons/Button';
+import { Input } from 'shared/components/Form/Inputs/InputNative';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
@@ -78,7 +80,7 @@ export function Home() {
           facilidade
         </S.Title>
 
-        <S.DistanceInput
+        <Input
           label="Distância a ser percorrida (km)"
           placeholder="Digite a distância"
           controller={{
@@ -86,6 +88,9 @@ export function Home() {
             control: form.control,
           }}
           keyboardType="phone-pad"
+          returnKeyType="next"
+          containerProps={{ mt: '8' }}
+          onSubmitEditing={() => form.setFocus('gasAmount')}
         />
 
         <InputMask
@@ -104,10 +109,11 @@ export function Home() {
           showError={showDemandError}
         />
 
-        <S.SumButton
+        <Button
           title="Somar valores"
           onPress={form.handleSubmit(handleSumValues)}
           testID="sum-values-button"
+          mt="12"
         />
       </S.Container>
     </>

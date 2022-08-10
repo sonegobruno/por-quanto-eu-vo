@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useCallback } from 'react';
-import { FormControl, IInputProps, Input as NativeInput } from 'native-base';
+import {
+  FormControl,
+  IFormControlProps,
+  IInputProps,
+  Input as NativeInput,
+} from 'native-base';
 import { Control, Controller } from 'react-hook-form';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { TogglePassword } from './TogglePassword';
@@ -15,11 +20,13 @@ interface Props extends IInputProps {
   controller: ControllerProps;
   label?: string;
   type?: 'text' | 'password';
+  containerProps?: IFormControlProps;
 }
 
 export function Input({
   label = '',
   type = 'text',
+  containerProps,
   controller,
   ...rest
 }: Props) {
@@ -39,7 +46,7 @@ export function Input({
         fieldState: { error },
       }) => {
         return (
-          <FormControl isInvalid={!!error?.message}>
+          <FormControl isInvalid={!!error?.message} {...containerProps}>
             <FormControl.Label
               _text={{
                 color: 'neutral.700',
