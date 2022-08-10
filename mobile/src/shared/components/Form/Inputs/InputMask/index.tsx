@@ -1,103 +1,92 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useCallback } from 'react';
-import { Input as ElementInput, InputProps } from 'react-native-elements';
+import React from 'react';
 import { Control, Controller } from 'react-hook-form';
+import {
+  FormControl,
+  IFormControlProps,
+  IInputProps,
+  Input as NativeInput,
+} from 'native-base';
 import {
   TextInputMask,
   TextInputMaskOptionProp,
   TextInputMaskTypeProp,
 } from 'react-native-masked-text';
 
-import * as S from './styles';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Footer } from '../InputNative/Footer';
 
 interface ControllerProps
   extends Omit<React.ComponentProps<typeof Controller>, 'render'> {
   control: Control<any, any>;
 }
 
-interface Props extends InputProps {
+interface Props extends IInputProps {
   controller: ControllerProps;
   label?: string;
-  containerStyles?: React.ComponentProps<typeof S.Container>['style'];
-  type: TextInputMaskTypeProp;
-  options?: TextInputMaskOptionProp | undefined;
+  maskType: TextInputMaskTypeProp;
+  maskOptions?: TextInputMaskOptionProp | undefined;
+  containerProps?: IFormControlProps;
 }
 
 export function InputMask({
   label = '',
-  type,
-  containerStyles,
+  maskType,
   controller,
-  options,
+  containerProps,
+  maskOptions,
   ...rest
 }: Props) {
-  const [isFocused, setIsFocused] = useState(false);
-
-  const toggleFocus = useCallback(() => {
-    setIsFocused(prevState => !prevState);
-  }, []);
-
   return (
-    <S.Container style={containerStyles}>
-      <Controller
-        {...controller}
-        render={({
-          field: { onChange, onBlur, value },
-          fieldState: { error },
-        }) => {
-          const state = isFocused
-            ? 'focus'
-            : error?.message
-            ? 'error'
-            : value
-            ? 'filled'
-            : 'normal';
-
-          return (
-            <TextInputMask
-              customTextInput={ElementInput}
-              onFocus={toggleFocus}
-              onBlur={() => {
-                toggleFocus();
-                onBlur();
+    <Controller
+      {...controller}
+      render={({
+        field: { onChange, onBlur, value, ref },
+        fieldState: { error },
+      }) => {
+        return (
+          <FormControl isInvalid={!!error?.message} {...containerProps}>
+            <FormControl.Label
+              _text={{
+                color: 'neutral.700',
+                fontSize: RFValue(16),
               }}
+            >
+              {label}
+            </FormControl.Label>
+            <TextInputMask
+              customTextInput={NativeInput}
+              onBlur={onBlur}
               onChangeText={textValue => onChange(textValue)}
               value={value}
-              type={type}
-              options={options}
+              type={maskType}
+              options={maskOptions}
               customTextInputProps={{
-                errorMessage: error?.message,
-                label,
-                inputContainerStyle: [
-                  S.styles.inputContainerStyle,
-                  S.stateStyle[state],
-                  rest.inputContainerStyle,
-                ],
-                inputStyle: [S.styles.inputStyle, rest.inputStyle],
-                labelStyle: [S.styles.labelStyle, rest.labelStyle],
-                containerStyle: [S.styles.containerStyle, rest.containerStyle],
-                errorStyle: S.styles.errorStyle,
+                ref,
+                color: 'neutral.700',
+                bg: 'neutral.200',
+                borderRadius: 6,
+                borderColor: 'neutral.300',
+                w: 'full',
+                h: `${RFValue(44)}px`,
+                fontSize: 'md',
+                placeholderTextColor: 'neutral.600',
+                _focus: {
+                  borderColor: error ? 'error.500' : 'secondary.300',
+                  borderWidth: 2,
+                  bg: error ? 'error.200' : 'secondary.100',
+                },
+                _invalid: {
+                  borderColor: 'error.500',
+                  borderWidth: 2,
+                },
                 ...rest,
               }}
             />
-          );
-        }}
-      />
-    </S.Container>
+            <Footer error={error} />
+          </FormControl>
+        );
+      }}
+    />
   );
 }
-
-// errorMessage={error?.message}
-// label={label}
-// inputContainerStyle={[
-//   S.styles.inputContainerStyle,
-//   S.stateStyle[state],
-//   rest.inputContainerStyle,
-// ]}
-// inputStyle={[S.styles.inputStyle, rest.inputStyle]}
-// labelStyle={[S.styles.labelStyle, rest.labelStyle]}
-// containerStyle={[
-//   S.styles.containerStyle,
-//   rest.containerStyle,
-// ]}
-// errorStyle={S.styles.errorStyle}

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { Heading } from 'native-base';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 
@@ -74,11 +75,11 @@ export function Home() {
       <StatusBar style="dark" translucent backgroundColor="#F8F9F9" />
 
       <S.Container>
-        <S.Title>
+        <Heading color="neutral.500" lineHeight="md" fontSize="2xl">
           Descubra o valor de {'\n'}
           combustível gasto com {'\n'}
           facilidade
-        </S.Title>
+        </Heading>
 
         <Input
           label="Distância a ser percorrida (km)"
@@ -100,7 +101,7 @@ export function Home() {
             name: 'gasAmount',
             control: form.control,
           }}
-          type="money"
+          maskType="money"
         />
 
         <DemandWrapper

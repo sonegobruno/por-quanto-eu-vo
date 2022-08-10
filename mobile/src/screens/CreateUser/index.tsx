@@ -7,7 +7,7 @@ import { StatusBar } from 'shared/components/StatusBar';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Input } from 'shared/components/Form/Inputs/InputNative';
 import { Button } from 'shared/components/Form/Buttons/Button';
-import { Center as Footer, Text } from 'native-base';
+import { Center as Footer, Heading, Text } from 'native-base';
 import Logo from '../../assets/logo.svg';
 import * as S from './styles';
 
@@ -45,7 +45,9 @@ export function CreateUser() {
         <S.Background />
 
         <S.Content>
-          <S.Title>Criar conta</S.Title>
+          <Heading fontSize="2xl" color="neutral.700">
+            Criar conta
+          </Heading>
 
           <Input
             label="Nome"
@@ -57,6 +59,7 @@ export function CreateUser() {
             keyboardType="name-phone-pad"
             returnKeyType="next"
             onSubmitEditing={() => form.setFocus('email')}
+            containerProps={{ mt: '4' }}
           />
 
           <Input

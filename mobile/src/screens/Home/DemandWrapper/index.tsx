@@ -1,3 +1,4 @@
+import { Heading, Text } from 'native-base';
 import React from 'react';
 import { DemandButton } from './DemandButton';
 
@@ -18,7 +19,9 @@ export function DemandWrapper({
 }: Props) {
   return (
     <>
-      <S.Demand>Cobrar:</S.Demand>
+      <Heading color="neutral.700" fontSize="2xl" textAlign="center" mt="4">
+        Cobrar:
+      </Heading>
 
       <S.DemandButtonContainer>
         <DemandButton
@@ -38,9 +41,15 @@ export function DemandWrapper({
       </S.DemandButtonContainer>
 
       {showError && (
-        <S.DemandError>
+        <Text
+          color="error.500"
+          fontSize="sm"
+          textAlign="center"
+          mt="4"
+          fontWeight="bold"
+        >
           opsss, você esqueceu de selecionar uma cobrança
-        </S.DemandError>
+        </Text>
       )}
     </>
   );
