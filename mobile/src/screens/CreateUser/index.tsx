@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { StatusBar } from 'shared/components/StatusBar';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Input } from 'shared/components/Form/Inputs/InputNative';
+import { Input } from 'shared/components/Form/Inputs/Input';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Center as Footer, Heading, Text } from 'native-base';
 import Logo from '../../assets/logo.svg';

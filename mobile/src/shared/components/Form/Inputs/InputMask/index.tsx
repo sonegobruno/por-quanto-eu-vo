@@ -14,7 +14,8 @@ import {
 } from 'react-native-masked-text';
 
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Footer } from '../InputNative/Footer';
+import { Footer } from '../Footer';
+import { Label } from '../Label';
 
 interface ControllerProps
   extends Omit<React.ComponentProps<typeof Controller>, 'render'> {
@@ -46,14 +47,8 @@ export function InputMask({
       }) => {
         return (
           <FormControl isInvalid={!!error?.message} {...containerProps}>
-            <FormControl.Label
-              _text={{
-                color: 'neutral.700',
-                fontSize: RFValue(16),
-              }}
-            >
-              {label}
-            </FormControl.Label>
+            {label !== '' && <Label>{label}</Label>}
+
             <TextInputMask
               customTextInput={NativeInput}
               onBlur={onBlur}

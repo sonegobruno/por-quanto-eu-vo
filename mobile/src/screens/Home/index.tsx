@@ -11,7 +11,7 @@ import { AVERAGE_FUEL_CONSUMPTION } from 'shared/contants/averageFuelConsumption
 import { InputMask } from 'shared/components/Form/Inputs/InputMask';
 import { StatusBar } from 'shared/components/StatusBar';
 import { Button } from 'shared/components/Form/Buttons/Button';
-import { Input } from 'shared/components/Form/Inputs/InputNative';
+import { Input } from 'shared/components/Form/Inputs/Input';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
