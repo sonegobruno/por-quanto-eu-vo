@@ -5,9 +5,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+    "start": "npm run typeorm migration:run && ts-node src/server.ts ",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
-    "start": "ts-node src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "git subtree push --prefix api heroku main"
   },
   "devDependencies": {
     "@types/cors": "^2.8.5",
