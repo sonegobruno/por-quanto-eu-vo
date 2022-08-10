@@ -12,7 +12,7 @@ interface Props extends Omit<IIconButtonProps, 'title' | 'variant'> {
 export function Button({ type = 'primary', title, ...rest }: Props) {
   if (type === 'link') {
     return (
-      <NativeButton variant="link" {...rest}>
+      <NativeButton testID="NativeButton" variant="link" {...rest}>
         <Text bold color="primary.600" fontSize="md">
           {title}
         </Text>
@@ -22,7 +22,12 @@ export function Button({ type = 'primary', title, ...rest }: Props) {
 
   if (type === 'secondary') {
     return (
-      <NativeButton borderColor="primary.600" variant="outline" {...rest}>
+      <NativeButton
+        testID="NativeButton"
+        borderColor="primary.600"
+        variant="outline"
+        {...rest}
+      >
         <Text bold color="primary.600" fontSize="md">
           {title}
         </Text>
@@ -31,7 +36,7 @@ export function Button({ type = 'primary', title, ...rest }: Props) {
   }
 
   return (
-    <NativeButton {...rest}>
+    <NativeButton testID="NativeButton" {...rest}>
       <Text bold color="neutral.100" fontSize="md">
         {title}
       </Text>
