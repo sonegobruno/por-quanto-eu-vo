@@ -5,3 +5,20 @@ Steps to run this project:
 1. Run `npm i` command
 2. Setup database settings inside `data-source.ts` file
 3. Run `npm start` command
+
+
+# Database localhost config
+
+ {
+   "type": "postgres",
+   "host": "localhost",
+   "username": "postgres",
+   "password": "postgres",
+   "database": "por-quanto-eu-vou",
+   "port": 5432,
+   "entities": ["./src/modules/*/entities/*.ts"],
+   "migrations": ["./src/database/migrations/*.ts"],
+   "cli": {
+       "migrationsDir": "./src/database/migrations"
+   }
+ }
