@@ -62,27 +62,3 @@ export const CreateButton = styled(PrimaryButton).attrs({
     marginTop: RFValue(16),
   },
 })``;
-
-export const Footer = styled.View`
-  width: 100%;
-  margin-top: ${RFValue(32)}px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-`;
-
-export const AlreadyAccountQuestion = styled.Text`
-  color: ${({ theme }) => theme.colors.neutral_600};
-  font-size: ${RFValue(16)}px;
-  font-family: ${({ theme }) => theme.fonts.roboto_regular};
-`;
-
-export const RedirectLoginButton = styled.TouchableOpacity`
-  margin-left: ${RFValue(4)}px;
-`;
-
-export const RedirectLoginText = styled.Text`
-  color: ${({ theme }) => theme.colors.primary};
-  font-size: ${RFValue(18)}px;
-  font-family: ${({ theme }) => theme.fonts.roboto_bold};
-`;

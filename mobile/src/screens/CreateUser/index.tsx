@@ -6,6 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { StatusBar } from 'shared/components/StatusBar';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Input } from 'shared/components/Form/Inputs/InputNative';
+import { Button } from 'shared/components/Form/Buttons/Button';
+import { Center as Footer, Text } from 'native-base';
 import Logo from '../../assets/logo.svg';
 import * as S from './styles';
 
@@ -95,19 +97,19 @@ export function CreateUser() {
             onSubmitEditing={form.handleSubmit(handleSumValues)}
           />
 
-          <S.CreateButton
+          <Button
+            type="primary"
             title="Cadastrar"
             onPress={form.handleSubmit(handleSumValues)}
+            mt="8"
           />
 
-          <S.Footer>
-            <S.AlreadyAccountQuestion>
+          <Footer flexDir="row" mt="4">
+            <Text color="neutral.600" fontSize="md">
               Já tem uma conta?
-            </S.AlreadyAccountQuestion>
-            <S.RedirectLoginButton>
-              <S.RedirectLoginText>Fazer login</S.RedirectLoginText>
-            </S.RedirectLoginButton>
-          </S.Footer>
+            </Text>
+            <Button type="link" title="Fazer login" />
+          </Footer>
         </S.Content>
       </S.Container>
     </>
