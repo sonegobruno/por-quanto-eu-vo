@@ -1,5 +1,5 @@
 import "reflect-metadata"
-
+import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
 import "express-async-errors";
@@ -8,6 +8,7 @@ import { router } from "./routes";
 import { handleErrors } from "./middlewares/ handleErrors";
 import './database';
 
+dotenv.config()
 const app = express();
 
 app.use(cors());
