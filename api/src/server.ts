@@ -16,6 +16,6 @@ app.use(express.json());
 app.use(router);
 app.use(handleErrors);
 
-app.listen(3333, () => {
+app.listen(process.env.PORT || 3333, () => {
     console.log('🚀 Backend Started!!');
 });
