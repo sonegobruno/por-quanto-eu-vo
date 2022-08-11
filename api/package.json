@@ -1,19 +1,13 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "server.ts",
-  "engines": {
-    "node": "14.*"
-  },
+  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn tsc",
-    "tsc": "./node_modules/typescript/bin/tsc",
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
-    "start": "node build/src/server.js",
-    "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli",
-    "test": "jest",
-    "deploy": "git subtree push --prefix api heroku main"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
+    "start": "ts-node src/server.ts",
+    "test": "jest"
   },
   "devDependencies": {
     "@types/cors": "^2.8.5",
@@ -38,7 +32,6 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.0.1",
     "express": "^4.17.13",
     "express-async-errors": "^3.1.1",
     "pg": "^8.7.1",
