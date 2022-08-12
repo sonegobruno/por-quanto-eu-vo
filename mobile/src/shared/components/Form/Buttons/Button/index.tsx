@@ -1,21 +1,31 @@
 import React from 'react';
 
-import { Button as NativeButton, IIconButtonProps, Text } from 'native-base';
+import { Button as NativeButton, IIconButtonProps } from 'native-base';
+import { Children } from './Children';
 
 type Type = 'primary' | 'secondary' | 'link';
 
 interface Props extends Omit<IIconButtonProps, 'title' | 'variant'> {
   type?: Type;
   title: string;
+  isLoading?: boolean;
 }
 
-export function Button({ type = 'primary', title, ...rest }: Props) {
+export function Button({
+  type = 'primary',
+  title,
+  isLoading = false,
+  ...rest
+}: Props) {
   if (type === 'link') {
     return (
-      <NativeButton testID="NativeButton" variant="link" {...rest}>
-        <Text bold color="primary.600" fontSize="md">
-          {title}
-        </Text>
+      <NativeButton
+        testID="NativeButton"
+        variant="link"
+        disabled={isLoading || rest.disabled}
+        {...rest}
+      >
+        <Children color="secondary" isLoading={isLoading} title={title} />
       </NativeButton>
     );
   }
@@ -26,20 +36,21 @@ export function Button({ type = 'primary', title, ...rest }: Props) {
         testID="NativeButton"
         borderColor="primary.600"
         variant="outline"
+        disabled={isLoading || rest.disabled}
         {...rest}
       >
-        <Text bold color="primary.600" fontSize="md">
-          {title}
-        </Text>
+        <Children color="secondary" isLoading={isLoading} title={title} />
       </NativeButton>
     );
   }
 
   return (
-    <NativeButton testID="NativeButton" {...rest}>
-      <Text bold color="neutral.100" fontSize="md">
-        {title}
-      </Text>
+    <NativeButton
+      testID="NativeButton"
+      disabled={isLoading || rest.disabled}
+      {...rest}
+    >
+      <Children color="primary" isLoading={isLoading} title={title} />
     </NativeButton>
   );
 }

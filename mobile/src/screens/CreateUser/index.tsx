@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +7,11 @@ import { StatusBar } from 'shared/components/StatusBar';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Input } from 'shared/components/Form/Inputs/Input';
 import { Button } from 'shared/components/Form/Buttons/Button';
-import { Center as Footer, Heading, Text } from 'native-base';
+import { Center as Footer, Heading, Text, useToast } from 'native-base';
+import { api } from 'services/api';
+import { apiResponseErrors } from 'shared/utils/apiResponseErrors';
+import { toastConfig } from 'shared/components/Toast';
+import { useNavigation } from '@react-navigation/native';
 import Logo from '../../assets/logo.svg';
 import * as S from './styles';
 
@@ -19,20 +23,50 @@ type FormValues = {
 };
 
 const FormSchema = yup.object().shape({
-  name: yup.string().required('Nome obrigatória'),
+  // name: yup.string().required('Nome obrigatória'),
   email: yup.string().required('Email obrigatório').email('Email inválido'),
-  password: yup.string().required('Senha obrigatório'),
-  confirmPassword: yup.string().required('Confirmar senha obrigatório'),
+  password: yup
+    .string()
+    .min(8, 'A senha deve conter no minimo 8 caracteres')
+    .max(22, 'A senha deve conter no maximo 22 caracteres')
+    .required('Senha obrigatório'),
+  confirmPassword: yup
+    .string()
+    .oneOf(
+      [yup.ref('password')],
+      'Campos "Senha" e "Confirmar Senha" não são iguais',
+    ),
 });
 
 export function CreateUser() {
+  const toast = useToast();
+  const navigation = useNavigation<any>();
   const form = useForm<FormValues>({
     resolver: yupResolver(FormSchema),
   });
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSumValues = useCallback((data: FormValues) => {
-    console.log(data);
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: FormValues) => {
+      setIsLoading(true);
+
+      try {
+        await api.post('/user', data);
+
+        toast.show(
+          toastConfig('Parabéns, sua conta foi criada com sucesso', 'success'),
+        );
+
+        navigation.navigate('Home');
+      } catch (err) {
+        const error = apiResponseErrors(err);
+        toast.show(toastConfig(error.message, 'error'));
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [navigation, toast],
+  );
 
   return (
     <>
@@ -97,13 +131,14 @@ export function CreateUser() {
             type="password"
             keyboardType="visible-password"
             returnKeyType="send"
-            onSubmitEditing={form.handleSubmit(handleSumValues)}
+            onSubmitEditing={form.handleSubmit(handleSubmit)}
           />
 
           <Button
+            isLoading={isLoading}
             type="primary"
             title="Cadastrar"
-            onPress={form.handleSubmit(handleSumValues)}
+            onPress={form.handleSubmit(handleSubmit)}
             mt="8"
           />
 
@@ -111,7 +146,11 @@ export function CreateUser() {
             <Text color="neutral.600" fontSize="md">
               Já tem uma conta?
             </Text>
-            <Button type="link" title="Fazer login" />
+            <Button
+              onPress={() => navigation.navigate('Home')}
+              type="link"
+              title="Fazer login"
+            />
           </Footer>
         </S.Content>
       </S.Container>
