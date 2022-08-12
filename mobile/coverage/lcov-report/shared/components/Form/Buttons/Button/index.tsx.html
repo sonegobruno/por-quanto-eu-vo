@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">91.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>11/12</span>
             </div>
         
             
@@ -108,7 +108,18 @@
 <a name='L43'></a><a href='#L43'>43</a>
 <a name='L44'></a><a href='#L44'>44</a>
 <a name='L45'></a><a href='#L45'>45</a>
-<a name='L46'></a><a href='#L46'>46</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -120,8 +131,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -131,21 +166,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,22 +177,32 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react';
 &nbsp;
-import { Button as NativeButton, IIconButtonProps, Text } from 'native-base';
+import { Button as NativeButton, IIconButtonProps } from 'native-base';
+import { Children } from './Children';
 &nbsp;
 type Type = 'primary' | 'secondary' | 'link';
 &nbsp;
 interface Props extends Omit&lt;IIconButtonProps, 'title' | 'variant'&gt; {
   type?: Type;
   title: string;
+  isLoading?: boolean;
 }
 &nbsp;
-export function Button({ type = <span class="branch-0 cbranch-no" title="branch not covered" >'primary',</span> title, ...rest }: Props) {
+export function Button({
+  type = <span class="branch-0 cbranch-no" title="branch not covered" >'primary',</span>
+  title,
+  isLoading = false,
+  ...rest
+}: Props) {
   if (type === 'link') {
     return (
-      &lt;NativeButton testID="NativeButton" variant="link" {...rest}&gt;
-        &lt;Text bold color="primary.600" fontSize="md"&gt;
-          {title}
-        &lt;/Text&gt;
+      &lt;NativeButton
+        testID="NativeButton"
+        variant="link"
+        disabled={isLoading || rest.disabled}
+        {...rest}
+      &gt;
+        &lt;Children color="secondary" isLoading={isLoading} title={title} /&gt;
       &lt;/NativeButton&gt;
     );
   }
@@ -181,20 +213,21 @@ export function Button({ type = <span class="branch-0 cbranch-no" title="branch 
         testID="NativeButton"
         borderColor="primary.600"
         variant="outline"
+        disabled={isLoading || rest.disabled}
         {...rest}
       &gt;
-        &lt;Text bold color="primary.600" fontSize="md"&gt;
-          {title}
-        &lt;/Text&gt;
+        &lt;Children color="secondary" isLoading={isLoading} title={title} /&gt;
       &lt;/NativeButton&gt;
     );
   }
 &nbsp;
   return (
-    &lt;NativeButton testID="NativeButton" {...rest}&gt;
-      &lt;Text bold color="neutral.100" fontSize="md"&gt;
-        {title}
-      &lt;/Text&gt;
+    &lt;NativeButton
+      testID="NativeButton"
+      disabled={isLoading || rest.disabled}
+      {...rest}
+    &gt;
+      &lt;Children color="primary" isLoading={isLoading} title={title} /&gt;
     &lt;/NativeButton&gt;
   );
 }
@@ -205,7 +238,7 @@ export function Button({ type = <span class="branch-0 cbranch-no" title="branch 
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Aug 09 2022 23:16:28 GMT-0300 (Horário Padrão de Brasília)
+                at Fri Aug 12 2022 12:16:12 GMT-0300 (Horário Padrão de Brasília)
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>

@@ -1,8 +1,17 @@
-import { fireEvent, render, RenderAPI } from '@testing-library/react-native';
-import React from 'react';
+/* eslint-disable react/jsx-no-bind */
+import {
+  act,
+  fireEvent,
+  render,
+  RenderAPI,
+  waitFor,
+} from '@testing-library/react-native';
+import React, { useState } from 'react';
 import { FakeNativeBaseProvider } from 'test/FakeNativeBaseProvider';
 import nativeTheme from 'styles/native-base-theme';
 import { Button } from '.';
+
+jest.useFakeTimers();
 
 const Providers: React.FC = ({ children }) => (
   <FakeNativeBaseProvider>{children}</FakeNativeBaseProvider>
@@ -12,6 +21,30 @@ const TestComponent: React.FC<any> = ({ onPress, type }) => {
   return (
     <Providers>
       <Button title="test" type={type} onPress={onPress} />
+    </Providers>
+  );
+};
+
+const WithLoadingComponent: React.FC<any> = ({ type }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  function onPress() {
+    act(() => {
+      setIsLoading(true);
+
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 100);
+    });
+  }
+  return (
+    <Providers>
+      <Button
+        title="test"
+        type={type}
+        isLoading={isLoading}
+        onPress={onPress}
+      />
     </Providers>
   );
 };
@@ -122,6 +155,38 @@ describe('Button Component', () => {
       fireEvent.press(nativeButton);
 
       expect(mockFn).toHaveBeenCalled();
+    });
+  });
+
+  describe('With Loading', () => {
+    const testLoading = async (type: string) => {
+      renderApi = render(<WithLoadingComponent type={type} />, {
+        wrapper: Providers,
+      });
+
+      const nativeButton = renderApi.getByTestId('NativeButton');
+
+      expect(renderApi.getByText('test')).toBeTruthy();
+
+      fireEvent.press(nativeButton);
+
+      expect(renderApi.getByTestId('Spinner Loading')).toBeTruthy();
+
+      await waitFor(() => expect(renderApi.getByText('test')).toBeTruthy(), {
+        interval: 100,
+      });
+    };
+
+    it('should render loading on primary button', async () => {
+      await testLoading('primary');
+    });
+
+    it('should render loading on secondary button', async () => {
+      await testLoading('secondary');
+    });
+
+    it('should render loading on link button', async () => {
+      await testLoading('link');
     });
   });
 });

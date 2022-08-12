@@ -11,7 +11,7 @@ export function Children({ isLoading, title, color }: Props) {
   const DSColor = color === 'primary' ? 'neutral.100' : 'primary.600';
 
   if (isLoading) {
-    return <Spinner color={DSColor} />;
+    return <Spinner testID="Spinner Loading" color={DSColor} />;
   }
 
   return (
