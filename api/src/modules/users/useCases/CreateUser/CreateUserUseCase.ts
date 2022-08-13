@@ -26,6 +26,12 @@ class CreateUserUseCase {
         throw new AppError('Senha não informada')
       }
 
+      const emailAlreadyExist = await this.userRepository.checkIfEmailAlreadyExist(data.email)
+
+      if(emailAlreadyExist) {
+        throw new AppError('Este E-mail ja foi cadastrado, por favor digite um novo E-mail')
+      }
+
       await this.userRepository.create(data);
     }
 }

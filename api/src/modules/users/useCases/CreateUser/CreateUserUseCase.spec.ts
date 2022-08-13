@@ -60,4 +60,18 @@ describe('CreateUserUseCase', () => {
       await createUserUseCase.execute(mockUser)
     }).rejects.toBeInstanceOf(AppError)
   })
+
+  fit('should not be able to create a new user with email already exist', async () => {
+    const mockUser = {
+      name: 'John Doe',
+      email: 'john.doe@email.com',
+      password: "123123"
+    }
+
+    await createUserUseCase.execute(mockUser)
+
+    expect(async () => {
+      await createUserUseCase.execute(mockUser)
+    }).rejects.toBeInstanceOf(AppError)
+  })
 })

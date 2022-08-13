@@ -36,6 +36,20 @@ class UserRepository implements IUsersRepository{
         throw new AppError(err);
       }
     }
+
+    public async checkIfEmailAlreadyExist(email: string): Promise<boolean> {
+      try {
+        const user =  await this.repository.findOne({
+          where: {
+            email
+          },
+        });
+
+        return !!user
+      } catch(err) {
+        return false;
+      }
+    }
 }
 
 export { UserRepository };
