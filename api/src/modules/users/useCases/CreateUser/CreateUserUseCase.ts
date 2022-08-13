@@ -4,6 +4,7 @@ import { AppError } from '../../../../errors';
 import { ICreateUserDTO } from '../../dtos/ICreateUserDtO';
 import { User } from '../../entities/User';
 import { IUsersRepository } from '../../repositories/IUserRepository';
+import { hash } from 'bcrypt';
 
 @injectable()
 class CreateUserUseCase {
@@ -32,7 +33,12 @@ class CreateUserUseCase {
         throw new AppError('Este E-mail ja foi cadastrado, por favor digite um novo E-mail')
       }
 
-      await this.userRepository.create(data);
+      const passwordHash = await hash(data.password, 8);
+
+      await this.userRepository.create({
+        ...data,
+        password: passwordHash
+      });
     }
 }
 

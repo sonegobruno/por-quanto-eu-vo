@@ -1,6 +1,7 @@
 import { AppError } from './../../../../errors/index';
 import { UserRepositoryInMemory } from "../../repositories/in-memory/UserRepositoryInMemory"
 import { CreateUserUseCase } from "./CreateUserUseCase"
+import { compare } from 'bcrypt';
 
 let createUserUseCase: CreateUserUseCase
 let userReponsitoryInMemory: UserRepositoryInMemory
@@ -21,7 +22,7 @@ describe('CreateUserUseCase', () => {
 
     expect(userReponsitoryInMemory.users[0].name).toContain(mockUser.name)
     expect(userReponsitoryInMemory.users[0].email).toContain(mockUser.email)
-    expect(userReponsitoryInMemory.users[0].password).toContain(mockUser.password)
+    expect(await compare(mockUser.password, userReponsitoryInMemory.users[0].password)).toBe(true)
   })
 
   it('should not be able to create a new user without name', async () => {
@@ -61,7 +62,7 @@ describe('CreateUserUseCase', () => {
     }).rejects.toBeInstanceOf(AppError)
   })
 
-  fit('should not be able to create a new user with email already exist', async () => {
+  it('should not be able to create a new user with email already exist', async () => {
     const mockUser = {
       name: 'John Doe',
       email: 'john.doe@email.com',
