@@ -16,21 +16,21 @@ class CreateUserUseCase {
 
     public async execute(data: ICreateUserDTO): Promise<void> {
       if(!data.name) {
-        throw new AppError('Nome não informado')
+        throw new AppError('Nome não informado', 400, 'name')
       }
 
       if(!data.email) {
-        throw new AppError('Email não informado')
+        throw new AppError('Email não informado', 400, 'email')
       }
 
       if(!data.password) {
-        throw new AppError('Senha não informada')
+        throw new AppError('Senha não informada', 400, 'password')
       }
 
       const emailAlreadyExist = await this.userRepository.findByEmail(data.email)
 
       if(!!emailAlreadyExist) {
-        throw new AppError('Este E-mail ja foi cadastrado, por favor digite um novo E-mail')
+        throw new AppError('Este E-mail ja foi cadastrado, por favor digite um novo E-mail', 400, 'email')
       }
 
       const passwordHash = await hash(data.password, 8);

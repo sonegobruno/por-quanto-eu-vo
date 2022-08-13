@@ -24,11 +24,11 @@ class AuthenticateUserUseCase {
     public async execute({ email, password } : IRequest): Promise<IResponse> {
 
         if(!email) {
-            throw new AppError('E-mail não informado')
+            throw new AppError('E-mail não informado', 400, 'email')
         }
 
         if(!password) {
-            throw new AppError('Senha não informada')
+            throw new AppError('Senha não informada', 400, 'password')
         }
 
         const user = await this.userRepository.findByEmail(email);
