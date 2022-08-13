@@ -7,4 +7,6 @@ const authenticateUserController = new AuthenticateUserController();
 
 authenticateRoutes.post('/', authenticateUserController.handle);
 
+authenticateRoutes.post('/me', authenticateUserController.handle);
+
 export { authenticateRoutes }
