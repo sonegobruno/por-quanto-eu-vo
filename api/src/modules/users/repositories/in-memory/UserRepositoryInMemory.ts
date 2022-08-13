@@ -25,10 +25,10 @@ class UserRepositoryInMemory implements IUsersRepository {
     this.users.push(user)
   }
 
-  async checkIfEmailAlreadyExist(email: string): Promise<boolean> {
+  async findByEmail(email: string): Promise<User | null> {
     const user = this.users.find(user => user.email === email)
 
-    return !!user
+    return user ?? null
   }
 }
 

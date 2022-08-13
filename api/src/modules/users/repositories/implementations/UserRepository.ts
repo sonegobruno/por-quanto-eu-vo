@@ -37,7 +37,7 @@ class UserRepository implements IUsersRepository{
       }
     }
 
-    public async checkIfEmailAlreadyExist(email: string): Promise<boolean> {
+    public async findByEmail(email: string): Promise<User | null> {
       try {
         const user =  await this.repository.findOne({
           where: {
@@ -45,9 +45,9 @@ class UserRepository implements IUsersRepository{
           },
         });
 
-        return !!user
+        return user
       } catch(err) {
-        return false;
+        return null;
       }
     }
 }
