@@ -43,6 +43,7 @@
       "import/no-extraneous-dependencies": "off",
       "no-console": "off",
       "camelcase": "off",
+      "react/prop-types": "off",
       "import/extensions": [
         "error",
         "ignorePackages",

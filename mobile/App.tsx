@@ -7,6 +7,7 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 
+import AppHooksProvider from 'hooks';
 import { Routes } from './src/routes';
 import AppProviders from './src/context';
 
@@ -23,7 +24,9 @@ export default function App() {
 
   return (
     <AppProviders>
-      <Routes />
+      <AppHooksProvider>
+        <Routes />
+      </AppHooksProvider>
     </AppProviders>
   );
 }

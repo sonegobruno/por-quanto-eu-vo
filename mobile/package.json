@@ -16,7 +16,7 @@
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.2.2",
     "@hookform/resolvers": "^2.8.8",
-    "@react-native-async-storage/async-storage": "^1.17.0",
+    "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-elements/base": "react-native-elements/react-native-elements#4.0.0-rc.0-base",
     "@react-native-elements/themed": "react-native-elements/react-native-elements#4.0.0-rc.0-themed",
     "@react-navigation/native": "^6.0.8",
