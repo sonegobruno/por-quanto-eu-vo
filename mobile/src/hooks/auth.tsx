@@ -67,8 +67,10 @@ export const AuthProvider: React.FC = React.memo(({ children }) => {
     [getUserAuthenticate],
   );
 
-  const signOut = useCallback(() => {
-    console.log('signOut');
+  const signOut = useCallback(async () => {
+    setUser(null);
+    await AsyncStorage.removeItem(AUTH_TOKEN_KEY);
+    api.defaults.headers.common.Authorization = '';
   }, []);
 
   const updateUser = useCallback((usuario: Me) => {

@@ -38,7 +38,7 @@ const FormSchema = yup.object().shape({
 
 export function CreateUser() {
   const toast = useToast();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
   const form = useForm<FormValues>({
     resolver: yupResolver(FormSchema),
   });

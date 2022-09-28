@@ -33,7 +33,7 @@ const FormSchema = yup.object().shape({
 export function Login() {
   const toast = useToast();
   const { signIn } = useAuth();
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
   const form = useForm<FormValues>({
     resolver: yupResolver(FormSchema),
   });

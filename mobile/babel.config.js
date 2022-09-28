@@ -18,7 +18,8 @@ module.exports = function(api) {
             '.ios.tsx'
           ]
         }
-      ]
+      ],
+      'react-native-reanimated/plugin'
     ],
   };
 };

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { Heading } from 'native-base';
+import { Flex, Heading, Text } from 'native-base';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,8 +12,10 @@ import { InputMask } from 'shared/components/Form/Inputs/InputMask';
 import { StatusBar } from 'shared/components/StatusBar';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Input } from 'shared/components/Form/Inputs/Input';
+import { RFValue } from 'react-native-responsive-fontsize';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
+import Logo from '../../assets/logo.svg';
 
 type FormValues = {
   distance: string;
@@ -36,7 +38,7 @@ export function Home() {
   const form = useForm<FormValues>({
     resolver: yupResolver(FormSchema),
   });
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
 
   const [demandSelected, setDemandSelected] = useState<DemandOptionsProps | ''>(
     '',
@@ -70,16 +72,27 @@ export function Home() {
     [demandSelected, navigation],
   );
 
+  const handleOpenDrawer = useCallback(() => {
+    (navigation as any).openDrawer();
+  }, [navigation]);
+
   return (
     <>
       <StatusBar style="dark" translucent backgroundColor="#F8F9F9" />
-
       <S.Container>
-        <Heading color="neutral.500" lineHeight="md" fontSize="2xl">
-          Descubra o valor de {'\n'}
-          combustível gasto com {'\n'}
-          facilidade
+        <Flex>
+          <Logo
+            onPress={handleOpenDrawer}
+            width={RFValue(40)}
+            height={RFValue(40)}
+          />
+        </Flex>
+        <Heading mt={4} color="neutral.700" lineHeight="sm" fontSize="3xl">
+          Por Quanto Eu vou
         </Heading>
+        <Text color="neutral.600" lineHeight="sm" fontSize="xs">
+          Descubra o valor de combustível gasto {'\n'}com facilidade
+        </Text>
 
         <Input
           label="Distância a ser percorrida (km)"
@@ -90,7 +103,7 @@ export function Home() {
           }}
           keyboardType="phone-pad"
           returnKeyType="next"
-          containerProps={{ mt: '8' }}
+          containerProps={{ mt: '4' }}
           onSubmitEditing={() => form.setFocus('gasAmount')}
         />
 

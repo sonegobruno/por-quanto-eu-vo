@@ -8,16 +8,13 @@ import { formatCurrency } from 'shared/utils/formatData';
 import { StatusBar } from 'shared/components/StatusBar';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Heading } from 'native-base';
+import { GasPriceShowParams } from '@types/navigation';
 import * as S from './styles';
-
-type Params = {
-  amountCurrency: number;
-};
 
 export function GasPriceShow() {
   const route = useRoute();
-  const { amountCurrency } = route.params as Params;
-  const { goBack } = useNavigation<any>();
+  const { amountCurrency } = route.params as GasPriceShowParams;
+  const { goBack } = useNavigation();
 
   return (
     <>
