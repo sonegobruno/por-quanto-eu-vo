@@ -1,27 +1,27 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { GasPriceShow } from '../screens/GasPriceShow';
-import { Home } from '../screens/Home';
+import { CreateUser } from 'screens/CreateUser';
+import { Login } from 'screens/Login';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
-export function AppRoutes() {
+export function AuthRoutes() {
   return (
     <Navigator>
       <Screen
-        name="Home"
-        component={Home}
+        name="Login"
+        component={Login}
         options={{
           headerShown: false,
         }}
       />
 
       <Screen
-        name="GasPriceShow"
-        component={GasPriceShow}
+        name="CreateUser"
+        component={CreateUser}
         options={{
-          headerShown: false,
+          headerTitle: 'Criar conta',
         }}
       />
     </Navigator>

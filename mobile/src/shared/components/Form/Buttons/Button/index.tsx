@@ -23,6 +23,7 @@ export function Button({
         testID="NativeButton"
         variant="link"
         disabled={isLoading || rest.disabled}
+        padding="12px"
         {...rest}
       >
         <Children color="secondary" isLoading={isLoading} title={title} />
@@ -37,6 +38,7 @@ export function Button({
         borderColor="primary.600"
         variant="outline"
         disabled={isLoading || rest.disabled}
+        padding="12px"
         {...rest}
       >
         <Children color="secondary" isLoading={isLoading} title={title} />
@@ -48,6 +50,8 @@ export function Button({
     <NativeButton
       testID="NativeButton"
       disabled={isLoading || rest.disabled}
+      padding="12px"
+      borderRadius={6}
       {...rest}
     >
       <Children color="primary" isLoading={isLoading} title={title} />

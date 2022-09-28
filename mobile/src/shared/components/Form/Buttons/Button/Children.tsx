@@ -15,7 +15,7 @@ export function Children({ isLoading, title, color }: Props) {
   }
 
   return (
-    <Text bold color={DSColor} fontSize="md">
+    <Text bold color={DSColor} fontSize="lg">
       {title}
     </Text>
   );

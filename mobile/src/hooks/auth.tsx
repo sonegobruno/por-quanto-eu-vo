@@ -19,16 +19,18 @@ interface SignInCredentials {
 }
 
 interface AuthContextState {
-  user: Me;
+  user: Me | null;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
   updateUser(usuario: Me): void;
+  isAuthenticate: boolean;
 }
 
 const AuthContext = createContext<AuthContextState>({} as AuthContextState);
 
 export const AuthProvider: React.FC = React.memo(({ children }) => {
-  const [user, setUser] = useState<Me>({} as Me);
+  const [user, setUser] = useState<Me | null>(null);
+  const isAuthenticate = !!user;
 
   const getUserAuthenticate = useCallback(async (token: string) => {
     api.defaults.headers.common.Authorization = token;
@@ -79,8 +81,9 @@ export const AuthProvider: React.FC = React.memo(({ children }) => {
       signIn,
       signOut,
       updateUser,
+      isAuthenticate,
     };
-  }, [signIn, signOut, updateUser, user]);
+  }, [signIn, signOut, updateUser, user, isAuthenticate]);
 
   return (
     <AuthContext.Provider value={dataProvider}>{children}</AuthContext.Provider>
