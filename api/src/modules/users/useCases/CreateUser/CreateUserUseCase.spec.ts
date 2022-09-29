@@ -1,6 +1,6 @@
 import { AppError } from './../../../../errors/index';
 import { UserRepositoryInMemory } from "../../repositories/in-memory/UserRepositoryInMemory"
-import { CreateUserUseCase } from "./CreateUserUseCase"
+import { CreateUserUseCase } from "./CreateCarUseCase"
 import { compare } from 'bcrypt';
 
 let createUserUseCase: CreateUserUseCase
