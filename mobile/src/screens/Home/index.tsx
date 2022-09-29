@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { Flex, Heading, Text } from 'native-base';
+import { Heading, Text } from 'native-base';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,10 +12,9 @@ import { InputMask } from 'shared/components/Form/Inputs/InputMask';
 import { StatusBar } from 'shared/components/StatusBar';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Input } from 'shared/components/Form/Inputs/Input';
-import { RFValue } from 'react-native-responsive-fontsize';
+import { HeaderWithMenu } from 'shared/components/Headers/HeaderWithMenu';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
-import Logo from '../../assets/logo.svg';
 
 type FormValues = {
   distance: string;
@@ -72,21 +71,11 @@ export function Home() {
     [demandSelected, navigation],
   );
 
-  const handleOpenDrawer = useCallback(() => {
-    (navigation as any).openDrawer();
-  }, [navigation]);
-
   return (
     <>
       <StatusBar style="dark" translucent backgroundColor="#F8F9F9" />
       <S.Container>
-        <Flex>
-          <Logo
-            onPress={handleOpenDrawer}
-            width={RFValue(40)}
-            height={RFValue(40)}
-          />
-        </Flex>
+        <HeaderWithMenu />
         <Heading mt={4} color="neutral.700" lineHeight="sm" fontSize="3xl">
           Por Quanto Eu vou
         </Heading>

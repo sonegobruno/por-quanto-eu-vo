@@ -1,37 +1,48 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { MaterialIcons } from '@expo/vector-icons';
 
-import { theme } from 'styles/theme';
+import nativeBaseTheme from 'styles/native-base-theme';
+import { Car, House } from 'phosphor-react-native';
 import { Home } from '../screens/Home';
-import { CustomDrawer } from './CustomDrawer';
+import { Drawer } from './components/Drawer';
+import { drawerIconConfig } from './drawer.config';
 
 const { Navigator, Screen } = createDrawerNavigator();
 
 export function AppDrawerRoutes() {
   return (
     <Navigator
-      drawerContent={props => <CustomDrawer {...props} />}
+      drawerContent={props => <Drawer {...props} />}
       screenOptions={{
         headerShown: false,
-        drawerIcon: () => (
-          <MaterialIcons
-            name="home"
-            size={24}
-            color={theme.colors.neutral_100}
-          />
-        ),
-        drawerLabel: 'Inicio',
         drawerLabelStyle: {
-          color: theme.colors.neutral_100,
           marginLeft: -15,
+          fontWeight: 'bold',
         },
-        drawerActiveBackgroundColor: theme.colors.primary,
-        drawerActiveTintColor: theme.colors.primary_300,
+        drawerActiveBackgroundColor: nativeBaseTheme.colors.primary[300],
+        drawerActiveTintColor: nativeBaseTheme.colors.neutral[100],
+        drawerInactiveBackgroundColor: 'transparent',
+        drawerInactiveTintColor: nativeBaseTheme.colors.neutral[500],
+        drawerPosition: 'right',
       }}
     >
-      <Screen name="Home" component={Home} />
+      <Screen
+        name="Home"
+        component={Home}
+        options={{
+          drawerLabel: 'Inicio',
+          drawerIcon: ({ focused }) => <House {...drawerIconConfig(focused)} />,
+        }}
+      />
+      <Screen
+        name="CarsList"
+        component={Home}
+        options={{
+          drawerLabel: 'Meus carros',
+          drawerIcon: ({ focused }) => <Car {...drawerIconConfig(focused)} />,
+        }}
+      />
     </Navigator>
   );
 }

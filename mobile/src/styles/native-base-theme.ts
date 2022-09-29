@@ -1,6 +1,6 @@
 import { extendTheme } from 'native-base';
 
-const nativeBaseTheme = {
+export const nativeBaseTheme = {
   colors: {
     neutral: {
       '900': '#1F2029',
@@ -32,6 +32,15 @@ const nativeBaseTheme = {
     },
     error: {
       '500': '#FF190C',
+    },
+    success: {
+      '500': '#52c41a',
+    },
+    warning: {
+      '500': '#faad14',
+    },
+    info: {
+      '500': '#3AA4DB',
     },
   },
   fonts: {
