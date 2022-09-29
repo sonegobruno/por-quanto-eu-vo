@@ -15,6 +15,12 @@ class DeleteCarByIdUseCase {
         throw new AppError('Usuário não informado', 400)
       }
 
+      const carExist = await this.carsRepository.listCarById(user_id, car_id)
+
+      if(!carExist) {
+        throw new AppError('Carro não encontrado', 400)
+      }
+
       await this.carsRepository.deleteCarById(user_id, car_id);
     }
 }

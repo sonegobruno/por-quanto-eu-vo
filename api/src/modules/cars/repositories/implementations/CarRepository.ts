@@ -1,6 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 import { AppError } from '../../../../errors';
 import { ICreateCarDTO } from '../../dtos/CreateCarDTO';
+import { IUpdateCarDTO } from '../../dtos/UpdateCarDTO ';
 import { Car } from '../../entities/Car';
 import { ICarsRepository } from '../ICarsRepository';
 
@@ -10,6 +11,14 @@ class CarRepository implements ICarsRepository{
 
   constructor() {
       this.repository = getRepository(Car)
+  }
+
+  async update(car_id: string, user_id: string, data: IUpdateCarDTO): Promise<void> {
+    try {
+      await this.repository.update({ id: car_id, user_id }, data)
+    } catch(err) {
+      throw new AppError(err);
+    }
   }
 
   async deleteCarById(user_id: string, car_id: string): Promise<void> {
