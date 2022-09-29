@@ -6,11 +6,22 @@ import { ICarsRepository } from '../ICarsRepository';
 
 class CarRepository implements ICarsRepository{
 
-    private repository: Repository<Car>
+  private repository: Repository<Car>
 
-    constructor() {
-        this.repository = getRepository(Car)
+  constructor() {
+      this.repository = getRepository(Car)
+  }
+
+  async deleteCarById(user_id: string, car_id: string): Promise<void> {
+    try {
+      await this.repository.delete({
+        id: car_id,
+        user_id
+      })
+    } catch(err) {
+      throw new AppError(err);
     }
+  }
 
   listCarById(user_id: string, car_id: string): Promise<Car> {
     try {
@@ -28,7 +39,7 @@ class CarRepository implements ICarsRepository{
   }
 
 
-  public async create(data: ICreateCarDTO) {
+  public async create(data: ICreateCarDTO): Promise<void> {
     try {
       const car = this.repository.create(data)
       await this.repository.save(car)
@@ -39,7 +50,7 @@ class CarRepository implements ICarsRepository{
 
   public async listCarsByUserId(user_id: string): Promise<Car[]> {
     try {
-      const cars = this.repository.find({
+      const cars = await this.repository.find({
         where: {
           user_id
         }
