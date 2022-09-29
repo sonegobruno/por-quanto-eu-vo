@@ -8,7 +8,8 @@
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
     "start": "ts-node src/server.ts",
     "test": "jest",
-    "postinstall": "ts-node ./node_modules/typeorm/cli migration:run"
+    "postinstall": "ts-node ./node_modules/typeorm/cli migration:run",
+    "deploy:prod": "cd .. && git subtree push --prefix api heroku master"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
