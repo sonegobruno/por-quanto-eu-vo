@@ -9,6 +9,6 @@ export class CreateUserController {
       const createUserUseCase = container.resolve(CreateUserUseCase);
       await createUserUseCase.execute(body);
 
-      return response.json({ message: 'Sucesso ao cadastrar usuário' });
+      return response.status(202).json({ message: 'Sucesso ao cadastrar usuário' });
     }
 }

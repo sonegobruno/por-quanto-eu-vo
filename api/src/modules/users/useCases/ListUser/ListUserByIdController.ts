@@ -9,6 +9,6 @@ export class ListUserByIdController {
         const listUserByIdUseCase = container.resolve(ListUserByIdUseCase);
 
         const user = await listUserByIdUseCase.execute(user_id);
-        return response.json({ user });
+        return response.status(202).json({ user });
     }
 }

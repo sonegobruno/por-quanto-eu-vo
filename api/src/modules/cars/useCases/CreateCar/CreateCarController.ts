@@ -13,6 +13,6 @@ export class CreateCarController {
         user_id
       });
 
-      return response.json({ message: 'Sucesso ao cadastrar carro' });
+      return response.status(202).json({ message: 'Sucesso ao cadastrar carro' });
     }
 }

@@ -10,6 +10,6 @@ export class ListCarByIdController {
       const listCarByIdUseCase = container.resolve(ListCarByIdUseCase);
       const car = await listCarByIdUseCase.execute(user_id, car_id);
 
-      return response.json({ car });
+      return response.status(202).json({ car });
     }
 }

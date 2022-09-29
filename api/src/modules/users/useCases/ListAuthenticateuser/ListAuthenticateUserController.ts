@@ -10,6 +10,6 @@ export class ListAuthenticateUserController {
 
     const me = await listUserByIdUseCase.execute(user_id);
 
-    return response.json({ me });
+    return response.status(202).json({ me });
   }
 }

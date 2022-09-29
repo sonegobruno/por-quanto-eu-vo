@@ -10,6 +10,6 @@ export class AuthenticateUserController {
 
         const authenticateInfo = await authenticateUserUseCase.execute(body);
 
-        return response.json(authenticateInfo);
+        return response.status(202).json(authenticateInfo);
     }
 }

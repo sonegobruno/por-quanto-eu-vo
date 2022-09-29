@@ -9,6 +9,6 @@ export class ListCarsyUserIdController {
       const listCarsByUserIdUseCase = container.resolve(ListCarsByUserIdUseCase);
       const cars = await listCarsByUserIdUseCase.execute(user_id);
 
-      return response.json({ cars });
+      return response.status(202).json({ cars });
     }
 }
