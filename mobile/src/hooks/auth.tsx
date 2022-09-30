@@ -1,5 +1,7 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import React, {
   createContext,
+  ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -12,6 +14,7 @@ import { AUTH_TOKEN_KEY } from 'constants/keys';
 import { MeDTO } from 'entities/me/me.dto';
 import { Me } from 'entities/me/me';
 import { meMapper } from 'mappers/meMapper';
+import { LoadingPage } from 'shared/components/LoadingPage';
 
 interface SignInCredentials {
   email: string;
@@ -24,12 +27,29 @@ interface AuthContextState {
   signOut(): void;
   updateUser(usuario: Me): void;
   isAuthenticate: boolean;
+  loadingUser: boolean;
 }
 
 const AuthContext = createContext<AuthContextState>({} as AuthContextState);
 
-export const AuthProvider: React.FC = React.memo(({ children }) => {
+interface Children {
+  children: ReactNode;
+  loadingUser: boolean;
+}
+
+function Children({ children, loadingUser }: Children): JSX.Element {
+  if (loadingUser) return <LoadingPage />;
+
+  return <>{children}</>;
+}
+
+interface Props {
+  children: ReactNode;
+}
+
+export const AuthProvider: React.FC<Props> = React.memo(({ children }) => {
   const [user, setUser] = useState<Me | null>(null);
+  const [loadingUser, setLoadingUser] = useState(true);
   const isAuthenticate = !!user;
 
   const getUserAuthenticate = useCallback(async (token: string) => {
@@ -46,8 +66,10 @@ export const AuthProvider: React.FC = React.memo(({ children }) => {
     async function shouldGetUserAuthenticate() {
       const token = await AsyncStorage.getItem(AUTH_TOKEN_KEY);
       if (token !== null) {
-        getUserAuthenticate(token);
+        await getUserAuthenticate(token);
       }
+
+      setLoadingUser(false);
     }
 
     shouldGetUserAuthenticate();
@@ -84,11 +106,14 @@ export const AuthProvider: React.FC = React.memo(({ children }) => {
       signOut,
       updateUser,
       isAuthenticate,
+      loadingUser,
     };
-  }, [signIn, signOut, updateUser, user, isAuthenticate]);
+  }, [signIn, signOut, updateUser, user, isAuthenticate, loadingUser]);
 
   return (
-    <AuthContext.Provider value={dataProvider}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={dataProvider}>
+      <Children loadingUser={loadingUser}>{children}</Children>
+    </AuthContext.Provider>
   );
 });
 
