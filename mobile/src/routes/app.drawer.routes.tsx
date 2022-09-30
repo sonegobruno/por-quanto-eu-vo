@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import nativeBaseTheme from 'styles/native-base-theme';
 import { Car, House } from 'phosphor-react-native';
+import { CarsList } from 'screens/CarsList';
 import { Home } from '../screens/Home';
 import { Drawer } from './components/Drawer';
 import { drawerIconConfig } from './drawer.config';
@@ -37,7 +38,7 @@ export function AppDrawerRoutes() {
       />
       <Screen
         name="CarsList"
-        component={Home}
+        component={CarsList}
         options={{
           drawerLabel: 'Meus carros',
           drawerIcon: ({ focused }) => <Car {...drawerIconConfig(focused)} />,
