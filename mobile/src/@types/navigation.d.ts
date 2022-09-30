@@ -9,6 +9,7 @@ export declare global {
       GasPriceShow: GasPriceShowParams;
       Login: undefined;
       CreateUser: undefined;
+      CreateCar: undefined;
     }
   }
 }

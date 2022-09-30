@@ -1,6 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { CreateCar } from 'screens/CreateCar';
 import { GasPriceShow } from '../screens/GasPriceShow';
 import { AppDrawerRoutes } from './app.drawer.routes';
 
@@ -20,6 +21,14 @@ export function AppRoutes() {
       <Screen
         name="GasPriceShow"
         component={GasPriceShow}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Screen
+        name="CreateCar"
+        component={CreateCar}
         options={{
           headerShown: false,
         }}

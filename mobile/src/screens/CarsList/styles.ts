@@ -18,4 +18,5 @@ export const Container = styled(SafeAreaView).attrs({
 
 export const CreateCarButton = styled(Fab).attrs({
   placement: 'bottom-right',
+  renderInPortal: false,
 })``;
