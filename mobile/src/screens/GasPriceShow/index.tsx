@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -8,13 +8,21 @@ import { formatCurrency } from 'shared/utils/formatData';
 import { StatusBar } from 'shared/components/StatusBar';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Heading } from 'native-base';
-import { GasPriceShowParams } from '@types/navigation';
+import { validateRouteParams } from 'shared/utils/validateRouteParams';
 import * as S from './styles';
 
 export function GasPriceShow() {
   const route = useRoute();
-  const { amountCurrency } = route.params as GasPriceShowParams;
-  const { goBack } = useNavigation();
+  const navigation = useNavigation();
+  const [amountCurrency, setAmountyCurrency] = useState(0);
+
+  useEffect(() => {
+    if (validateRouteParams(route.params, 'amountCurrency', 'number')) {
+      setAmountyCurrency(route.params.amountCurrency);
+    } else {
+      navigation.navigate('Home');
+    }
+  }, [route.params, navigation]);
 
   return (
     <>
@@ -54,7 +62,7 @@ export function GasPriceShow() {
         <Button
           testID="gas-price-show-back-button"
           title="Somar novo valor"
-          onPress={goBack}
+          onPress={navigation.goBack}
           mt="8"
         />
       </S.Container>
