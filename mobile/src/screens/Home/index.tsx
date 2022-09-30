@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { Heading, Text } from 'native-base';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,6 +12,7 @@ import { StatusBar } from 'shared/components/StatusBar';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Input } from 'shared/components/Form/Inputs/Input';
 import { HeaderWithMenu } from 'shared/components/Headers/HeaderWithMenu';
+import { Heading } from 'shared/components/Heading';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
@@ -76,12 +76,10 @@ export function Home() {
       <StatusBar style="dark" translucent backgroundColor="#F8F9F9" />
       <S.Container>
         <HeaderWithMenu />
-        <Heading mt={4} color="neutral.700" lineHeight="sm" fontSize="3xl">
-          Por Quanto Eu vou
-        </Heading>
-        <Text color="neutral.600" lineHeight="sm" fontSize="xs">
-          Descubra o valor de combustível gasto {'\n'}com facilidade
-        </Text>
+        <Heading
+          title="Por Quanto Eu vou"
+          subTitle={`Descubra o valor de combustível gasto ${'\n'}com facilidade`}
+        />
 
         <Input
           label="Distância a ser percorrida (km)"

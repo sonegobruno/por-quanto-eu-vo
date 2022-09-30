@@ -15,7 +15,7 @@ export const Container = styled(SafeAreaView).attrs({
 `;
 
 export const Content = styled(KeyboardAwareScrollView).attrs(() => ({
-  contentContainerStyle: { padding: RFValue(15), paddingTop: RFValue(8) },
+  contentContainerStyle: { padding: RFValue(16), paddingTop: RFValue(4) },
   keyboardShouldPersistTaps: 'handled',
   showsVerticalScrollIndicator: false,
 }))`
