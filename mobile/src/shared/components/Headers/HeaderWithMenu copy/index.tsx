@@ -14,12 +14,7 @@ export function HeaderWithMenu() {
   }, [navigation]);
 
   return (
-    <Flex
-      alignItems="center"
-      flexDir="row"
-      justifyContent="space-between"
-      px="2"
-    >
+    <Flex alignItems="center" flexDir="row" justifyContent="space-between">
       <Logo width={RFValue(40)} height={RFValue(40)} />
       <IconButton
         onPress={handleOpenDrawer}

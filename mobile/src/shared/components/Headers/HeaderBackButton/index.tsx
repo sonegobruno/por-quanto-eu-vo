@@ -1,16 +1,16 @@
-import { DrawerActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { Flex, IconButton } from 'native-base';
-import { List } from 'phosphor-react-native';
+import { CaretLeft } from 'phosphor-react-native';
 import React, { useCallback } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import nativeBaseTheme from 'styles/native-base-theme';
 import Logo from '../../../../assets/logo.svg';
 
-export function HeaderWithMenu() {
+export function HeaderBackButton() {
   const navigation = useNavigation();
 
-  const handleOpenDrawer = useCallback(() => {
-    navigation.dispatch(DrawerActions.openDrawer());
+  const handleBack = useCallback(() => {
+    navigation.goBack();
   }, [navigation]);
 
   return (
@@ -20,12 +20,14 @@ export function HeaderWithMenu() {
       justifyContent="space-between"
       px="2"
     >
-      <Logo width={RFValue(40)} height={RFValue(40)} />
       <IconButton
-        onPress={handleOpenDrawer}
+        onPress={handleBack}
         borderRadius="full"
-        icon={<List size={32} color={nativeBaseTheme.colors.neutral[600]} />}
+        icon={
+          <CaretLeft size={24} color={nativeBaseTheme.colors.neutral[600]} />
+        }
       />
+      <Logo width={RFValue(40)} height={RFValue(40)} />
     </Flex>
   );
 }

@@ -1,6 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { HeaderBackButton } from 'shared/components/Headers/HeaderBackButton';
+import { Container } from './styles';
 
 export function CreateCar() {
-  return <View />;
+  return (
+    <Container>
+      <HeaderBackButton />
+    </Container>
+  );
 }
