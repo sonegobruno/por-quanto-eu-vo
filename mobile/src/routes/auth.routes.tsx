@@ -22,6 +22,7 @@ export function AuthRoutes() {
         component={CreateUser}
         options={{
           headerTitle: 'Criar conta',
+          headerShown: false,
         }}
       />
     </Navigator>

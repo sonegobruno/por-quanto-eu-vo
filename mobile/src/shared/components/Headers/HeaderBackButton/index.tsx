@@ -18,7 +18,7 @@ export function HeaderBackButton() {
       alignItems="center"
       flexDir="row"
       justifyContent="space-between"
-      px="2"
+      px="1"
     >
       <IconButton
         onPress={handleBack}

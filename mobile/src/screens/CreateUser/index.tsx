@@ -11,6 +11,8 @@ import { api } from 'services/api';
 import { apiResponseErrors } from 'shared/utils/apiResponseErrors';
 import { toastConfig } from 'shared/components/Toast';
 import { useNavigation } from '@react-navigation/native';
+import { HeaderBackButton } from 'shared/components/Headers/HeaderBackButton';
+import { Heading } from 'shared/components/Heading';
 import * as S from './styles';
 
 type FormValues = {
@@ -70,7 +72,12 @@ export function CreateUser() {
     <>
       <StatusBar style="dark" translucent backgroundColor="#F8F9F9" />
       <S.Container>
+        <HeaderBackButton />
         <S.Content>
+          <Heading
+            title="Criar conta"
+            subTitle="Crie sua conta para começar a utilizar o App"
+          />
           <Input
             label="Nome"
             controller={{
@@ -104,7 +111,6 @@ export function CreateUser() {
             }}
             placeholder="Digite sua senha"
             type="password"
-            keyboardType="visible-password"
             returnKeyType="next"
             onSubmitEditing={() => form.setFocus('confirmPassword')}
           />
@@ -117,7 +123,6 @@ export function CreateUser() {
               control: form.control,
             }}
             type="password"
-            keyboardType="visible-password"
             returnKeyType="send"
             onSubmitEditing={form.handleSubmit(handleSubmit)}
           />

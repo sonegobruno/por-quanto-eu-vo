@@ -94,7 +94,6 @@ export function Login() {
             }}
             placeholder="Digite sua senha"
             type="password"
-            keyboardType="visible-password"
             returnKeyType="send"
             onSubmitEditing={form.handleSubmit(handleSubmit)}
           />
