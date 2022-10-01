@@ -3,12 +3,13 @@ import { HeaderWithMenu } from 'shared/components/Headers/HeaderWithMenu';
 import nativeBaseTheme from 'styles/native-base-theme';
 import { Plus } from 'phosphor-react-native';
 
-import { FlatList, Text, View } from 'native-base';
+import { FlatList, Text } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { useListMyCars } from 'services/react-query/hooks/listMyCars';
 import { ActivityIndicator } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import * as S from './styles';
+import { CarCard } from './components/CarCard';
 
 export function CarsList() {
   const navigate = useNavigation();
@@ -30,9 +31,10 @@ export function CarsList() {
       <FlatList
         data={data}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        renderItem={({ item }) => <CarCard car={item} />}
         ListEmptyComponent={<Text>Nenhum carro cadastrado</Text>}
         contentContainerStyle={{ paddingHorizontal: RFValue(8) }}
+        style={{ marginTop: 8 }}
       />
       <S.CreateCarButton
         onPress={navigateToCreateCar}
