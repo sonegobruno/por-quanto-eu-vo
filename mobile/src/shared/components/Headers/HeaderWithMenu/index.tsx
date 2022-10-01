@@ -18,7 +18,7 @@ export function HeaderWithMenu() {
       alignItems="center"
       flexDir="row"
       justifyContent="space-between"
-      px="2"
+      px="1"
     >
       <Logo width={RFValue(40)} height={RFValue(40)} />
       <IconButton
