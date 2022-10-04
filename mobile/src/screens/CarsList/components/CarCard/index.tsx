@@ -1,7 +1,9 @@
 import { Car } from 'entities/car/car';
-import { Box, Flex, HStack, Text, View } from 'native-base';
+import { Text, View } from 'native-base';
 import React from 'react';
-import { formatCurrency } from 'shared/utils/formatData';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { ActionsCard } from '../ActionsCard';
+import { FooterCard } from '../FooterCard';
 
 interface Props {
   car: Car;
@@ -9,35 +11,20 @@ interface Props {
 
 export function CarCard({ car }: Props) {
   return (
-    <View px="3" py="4" bg="neutral.200" rounded="md">
-      <Text color="neutral.700" bold>
+    <View px="3" py="4" w="full" position="relative">
+      <Text fontSize="lg" color="neutral.700" maxW={`${RFValue(224)}px`} bold>
         {car.name}
       </Text>
-      <Text color="neutral.600">{car.description}</Text>
-      <HStack space="4" mt="1">
-        <Box alignItems="center">
-          <Flex flexDir="row" alignItems="center">
-            <Box bg="primary.500" w="2" h="2" rounded="full" mr="1" />
-            <Text bold color="neutral.700">
-              Gasolina
-            </Text>
-          </Flex>
-          <Text color="neutral.700">
-            {formatCurrency(car.gasConsumption)} / Km
-          </Text>
-        </Box>
-        <Box alignItems="center">
-          <Flex flexDir="row" alignItems="center">
-            <Box bg="primary.500" w="2" h="2" rounded="full" mr="1" />
-            <Text bold color="neutral.700">
-              Álcool
-            </Text>
-          </Flex>
-          <Text color="neutral.700">
-            {formatCurrency(car.alcoholConsumption)} / Km
-          </Text>
-        </Box>
-      </HStack>
+      <Text mt="3" color="neutral.600">
+        {car.description}
+      </Text>
+
+      <ActionsCard />
+
+      <FooterCard
+        gasConsumption={car.gasConsumption}
+        alcoholConsumption={car.alcoholConsumption}
+      />
     </View>
   );
 }

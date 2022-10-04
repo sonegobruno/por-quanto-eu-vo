@@ -9,8 +9,11 @@ import {
 } from '@expo-google-fonts/roboto';
 
 import AppHooksProvider from 'hooks';
+import { LogBox } from 'react-native';
 import { Routes } from './src/routes';
 import AppProviders from './src/context';
+
+LogBox.ignoreLogs(['Setting a timer']);
 
 export default function App() {
   const [fontsLoaded] = useFonts({

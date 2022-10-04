@@ -11,6 +11,6 @@ export async function getMyCars(): Promise<Car[]> {
 
 export function useListMyCars() {
   return useQuery('my-cars', () => getMyCars(), {
-    staleTime: 1000 * 60 * 10, // 10
+    staleTime: 60 * 60 * 24, // 24 hours
   });
 }

@@ -1,41 +1,40 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, { useCallback } from 'react';
 import { HeaderWithMenu } from 'shared/components/Headers/HeaderWithMenu';
 import nativeBaseTheme from 'styles/native-base-theme';
 import { Plus } from 'phosphor-react-native';
-
-import { FlatList, Text } from 'native-base';
+import { FlatList, Text, Divider, View } from 'native-base';
 import { useNavigation } from '@react-navigation/native';
 import { useListMyCars } from 'services/react-query/hooks/listMyCars';
-import { ActivityIndicator } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
 import * as S from './styles';
 import { CarCard } from './components/CarCard';
+import { EmptyCarListComponent } from './components/EmptyCarListComponent';
 
 export function CarsList() {
   const navigate = useNavigation();
   const { data, isLoading } = useListMyCars();
 
-  console.log(data);
-
   const navigateToCreateCar = useCallback(() => {
     navigate.navigate('CreateCar');
   }, [navigate]);
 
-  if (isLoading) {
-    return <ActivityIndicator />;
-  }
-
   return (
     <S.Container>
       <HeaderWithMenu />
-      <FlatList
-        data={data}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => <CarCard car={item} />}
-        ListEmptyComponent={<Text>Nenhum carro cadastrado</Text>}
-        contentContainerStyle={{ paddingHorizontal: RFValue(8) }}
-        style={{ marginTop: 8 }}
-      />
+      <View flex="1">
+        <FlatList
+          data={data}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <CarCard car={item} />}
+          ListEmptyComponent={<EmptyCarListComponent isLoading={isLoading} />}
+          ItemSeparatorComponent={() => <Divider bg="neutral.300" />}
+          style={{ marginTop: 8 }}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+          }}
+        />
+      </View>
       <S.CreateCarButton
         onPress={navigateToCreateCar}
         icon={<Plus size={20} color={nativeBaseTheme.colors.neutral[100]} />}
