@@ -19,7 +19,7 @@ export function CarCard({ car }: Props) {
         {car.description}
       </Text>
 
-      <ActionsCard />
+      <ActionsCard carId={car.id} carName={car.name} />
 
       <FooterCard
         gasConsumption={car.gasConsumption}

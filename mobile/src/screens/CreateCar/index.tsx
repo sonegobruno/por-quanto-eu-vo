@@ -4,6 +4,7 @@ import { useToast } from 'native-base';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { api } from 'services/api';
+import { queryClient } from 'services/query-client';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Input } from 'shared/components/Form/Inputs/Input';
 import { HeaderBackButton } from 'shared/components/Headers/HeaderBackButton';
@@ -42,6 +43,8 @@ export function CreateCar() {
         toast.show(
           toastConfig('Parabéns, seu carro foi criada com sucesso', 'success'),
         );
+
+        queryClient.refetchQueries('my-cars');
 
         navigation.goBack();
       } catch (err) {

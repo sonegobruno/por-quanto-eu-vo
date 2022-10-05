@@ -15,6 +15,7 @@ import { MeDTO } from 'entities/me/me.dto';
 import { Me } from 'entities/me/me';
 import { meMapper } from 'mappers/meMapper';
 import { LoadingPage } from 'shared/components/LoadingPage';
+import { apiResponseErrors } from 'shared/utils/apiResponseErrors';
 
 interface SignInCredentials {
   email: string;
@@ -65,11 +66,15 @@ export const AuthProvider: React.FC<Props> = React.memo(({ children }) => {
   useEffect(() => {
     async function shouldGetUserAuthenticate() {
       const token = await AsyncStorage.getItem(AUTH_TOKEN_KEY);
-      if (token !== null) {
-        await getUserAuthenticate(token);
+      try {
+        if (token !== null) {
+          await getUserAuthenticate(token);
+        }
+      } catch (err) {
+        apiResponseErrors(err);
+      } finally {
+        setLoadingUser(false);
       }
-
-      setLoadingUser(false);
     }
 
     shouldGetUserAuthenticate();
