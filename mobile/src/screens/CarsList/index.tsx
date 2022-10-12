@@ -15,7 +15,9 @@ export function CarsList() {
   const { data, isLoading } = useListMyCars();
 
   const navigateToCreateCar = useCallback(() => {
-    navigate.navigate('CreateCar');
+    navigate.navigate('CreateAndEditCar', {
+      from: 'create',
+    });
   }, [navigate]);
 
   return (

@@ -9,6 +9,7 @@ import { toastConfig } from 'shared/components/Toast';
 import { apiResponseErrors } from 'shared/utils/apiResponseErrors';
 import { AlertDialog } from 'shared/components/Dialogs/AlertDialog';
 import { Car } from 'entities/car/car';
+import { useNavigation } from '@react-navigation/native';
 
 interface Props {
   carName: string;
@@ -18,6 +19,7 @@ interface Props {
 export function ActionsCard({ carName, carId }: Props) {
   const toast = useToast();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigation();
 
   const closeAlert = useCallback(() => {
     setIsOpen(false);
@@ -51,9 +53,17 @@ export function ActionsCard({ carName, carId }: Props) {
     mutationDeleteCar.mutate();
   }, [mutationDeleteCar]);
 
+  const navigateToUpdateCar = useCallback(() => {
+    navigate.navigate('CreateAndEditCar', {
+      from: 'edit',
+      carId,
+    });
+  }, [navigate, carId]);
+
   return (
     <HStack space="2" position="absolute" right="4" top="3">
       <IconButton
+        onPress={navigateToUpdateCar}
         size="sm"
         colorScheme="secondary"
         variant="outline"

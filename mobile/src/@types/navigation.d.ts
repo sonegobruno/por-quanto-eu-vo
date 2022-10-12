@@ -2,6 +2,11 @@ type GasPriceShowParams = {
   amountCurrency: number;
 };
 
+type CreateAndEditCarParams = {
+  from: 'create' | 'edit';
+  carId?: string;
+};
+
 export declare global {
   namespace ReactNavigation {
     interface RootParamList {
@@ -9,7 +14,7 @@ export declare global {
       GasPriceShow: GasPriceShowParams;
       Login: undefined;
       CreateUser: undefined;
-      CreateCar: undefined;
+      CreateAndEditCar: CreateAndEditCarParams;
     }
   }
 }
