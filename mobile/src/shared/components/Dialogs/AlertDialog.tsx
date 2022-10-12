@@ -10,6 +10,7 @@ interface Props {
   isOpen: boolean;
   title: string;
   text: string;
+  doneText: string;
   onCancel: () => void;
   onDone: () => void;
   doneIsLoading?: boolean;
@@ -19,6 +20,7 @@ export function AlertDialog({
   isOpen,
   title,
   text,
+  doneText,
   onCancel,
   onDone,
   doneIsLoading = false,
@@ -61,7 +63,7 @@ export function AlertDialog({
               isLoading={doneIsLoading}
             >
               <Text fontSize="md" fontWeight="bold" color="neutral.100">
-                Excluir
+                {doneText}
               </Text>
             </Button>
           </Button.Group>

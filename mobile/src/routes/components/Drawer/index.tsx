@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { Box } from 'native-base';
 import {
   DrawerContentComponentProps,
@@ -8,10 +8,21 @@ import {
 import { useAuth } from 'hooks/auth';
 import nativeBaseTheme from 'styles/native-base-theme';
 import { SignOut } from 'phosphor-react-native';
+import { AlertDialog } from 'shared/components/Dialogs/AlertDialog';
 import { LogoutButton, LogoutButtonText } from './styles';
 
 export function Drawer({ ...rest }: DrawerContentComponentProps) {
   const { signOut } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeAlert = useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
+  const openAlert = useCallback(() => {
+    setIsOpen(true);
+  }, []);
+
   return (
     <Box flex="1">
       <DrawerContentScrollView {...rest}>
@@ -20,11 +31,20 @@ export function Drawer({ ...rest }: DrawerContentComponentProps) {
         </Box>
       </DrawerContentScrollView>
       <Box mt="auto" p="2">
-        <LogoutButton onPress={signOut}>
+        <LogoutButton onPress={openAlert}>
           <SignOut size={24} color={nativeBaseTheme.colors.neutral[500]} />
           <LogoutButtonText>Sair</LogoutButtonText>
         </LogoutButton>
       </Box>
+
+      <AlertDialog
+        isOpen={isOpen}
+        title="Sair da conta"
+        text="Tem certeza que deseja sair da sua conta?"
+        doneText="Sair"
+        onCancel={closeAlert}
+        onDone={signOut}
+      />
     </Box>
   );
 }

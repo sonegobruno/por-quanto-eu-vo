@@ -73,6 +73,7 @@ export function ActionsCard({ carName, carId }: Props) {
         isOpen={isOpen}
         title="Excluir Carro"
         text={`Tem certeza que deseja remover o carro: ${carName}?`}
+        doneText="Excluir"
         onCancel={closeAlert}
         onDone={handleDeleteCar}
         doneIsLoading={mutationDeleteCar.isLoading}
