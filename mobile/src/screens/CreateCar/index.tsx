@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useToast } from 'native-base';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
+import { useMutation } from 'react-query';
 import { api } from 'services/api';
 import { queryClient } from 'services/query-client';
 import { Button } from 'shared/components/Form/Buttons/Button';
@@ -35,11 +36,12 @@ export function CreateCar() {
   });
   const navigation = useNavigation();
 
-  const handleCreateCar = useCallback(
+  const mutationCreateCar = useMutation(
     async (data: FormValues) => {
-      try {
-        await api.post('/car', data);
-
+      return api.post('/car', data);
+    },
+    {
+      onSuccess() {
         toast.show(
           toastConfig('Parabéns, seu carro foi criada com sucesso', 'success'),
         );
@@ -47,12 +49,19 @@ export function CreateCar() {
         queryClient.refetchQueries('my-cars');
 
         navigation.goBack();
-      } catch (err) {
+      },
+      onError(err) {
         const error = apiResponseErrors(err);
         toast.show(toastConfig(error.message, 'error'));
-      }
+      },
     },
-    [navigation, toast],
+  );
+
+  const handleCreateCar = useCallback(
+    async (data: FormValues) => {
+      mutationCreateCar.mutate(data);
+    },
+    [mutationCreateCar],
   );
 
   return (
@@ -115,6 +124,7 @@ export function CreateCar() {
           title="Criar carro"
           onPress={form.handleSubmit(handleCreateCar)}
           mt="12"
+          isLoading={mutationCreateCar.isLoading}
         />
       </Content>
     </Container>
