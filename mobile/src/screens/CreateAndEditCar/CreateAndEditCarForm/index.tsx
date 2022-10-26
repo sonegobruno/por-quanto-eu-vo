@@ -12,40 +12,31 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 import { useToast } from 'native-base';
 import { Car } from 'entities/car/car';
-
-type FormValues = {
-  name: string;
-  description: string;
-  gas_consumption: number;
-  alcohol_consumption: number;
-};
+import { CarFormValues, uniqueCarFormMapper } from 'mappers/carMapper';
+import { TypePage } from '..';
 
 const FormSchema = yup.object().shape({
   name: yup.string().required('Nome obrigatório'),
   description: yup.string().required('Descrição obrigatória'),
-  gas_consumption: yup.number().required('Gasolina obrigatória'),
-  alcohol_consumption: yup.number().required('Álcool obrigatório'),
+  gas_consumption: yup.string().required('Gasolina obrigatória'),
+  alcohol_consumption: yup.string().required('Álcool obrigatório'),
 });
 
 interface Props {
   car: Car | null;
+  type: TypePage;
 }
 
-export function CreateAndEditCarForm({ car }: Props) {
+export function CreateAndEditCarForm({ car, type }: Props) {
   const toast = useToast();
-  const form = useForm<FormValues>({
+  const form = useForm<CarFormValues>({
     resolver: yupResolver(FormSchema),
-    defaultValues: {
-      name: car?.name ?? '',
-      alcohol_consumption: car?.alcoholConsumption ?? 0,
-      description: car?.description ?? '',
-      gas_consumption: car?.gasConsumption ?? 0,
-    },
+    defaultValues: uniqueCarFormMapper(car),
   });
   const navigation = useNavigation();
 
   const mutationCreateCar = useMutation(
-    async (data: FormValues) => {
+    async (data: CarFormValues) => {
       return api.post('/car', data);
     },
     {
@@ -65,11 +56,51 @@ export function CreateAndEditCarForm({ car }: Props) {
     },
   );
 
-  const handleCreateCar = useCallback(
-    async (data: FormValues) => {
-      mutationCreateCar.mutate(data);
+  const mutationUpdateCar = useMutation(
+    async (data: CarFormValues) => {
+      return api.put('/car', {
+        id: car?.id,
+        image_url: '',
+        image_description: '',
+        ...data,
+      });
     },
-    [mutationCreateCar],
+    {
+      onSuccess() {
+        toast.show(
+          toastConfig(
+            'Parabéns, seu carro foi atualizado com sucesso',
+            'success',
+          ),
+        );
+
+        queryClient.refetchQueries('my-cars');
+
+        navigation.goBack();
+      },
+      onError(err) {
+        const error = apiResponseErrors(err);
+        toast.show(toastConfig(error.message, 'error'));
+      },
+    },
+  );
+
+  const handleCreateCar = useCallback(
+    async (data: CarFormValues) => {
+      switch (type) {
+        case 'create':
+          mutationCreateCar.mutate(data);
+          break;
+
+        case 'edit':
+          mutationUpdateCar.mutate(data);
+          break;
+
+        default:
+          throw new Error('Invalid Type');
+      }
+    },
+    [mutationCreateCar, mutationUpdateCar, type],
   );
 
   return (
@@ -122,10 +153,10 @@ export function CreateAndEditCarForm({ car }: Props) {
       />
 
       <Button
-        title="Criar carro"
+        title={type === 'create' ? 'Criar carro' : 'Atualizar carro'}
         onPress={form.handleSubmit(handleCreateCar)}
         mt="12"
-        isLoading={mutationCreateCar.isLoading}
+        isLoading={mutationCreateCar.isLoading || mutationUpdateCar.isLoading}
       />
     </>
   );

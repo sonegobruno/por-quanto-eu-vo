@@ -20,3 +20,19 @@ export function uniqueCarMapper(data: UniqueCarDTO): Car {
     gasConsumption: data.car.gas_consumption,
   };
 }
+
+export type CarFormValues = Pick<Car, 'name' | 'description'> & {
+  gas_consumption: string;
+  alcohol_consumption: string;
+};
+
+export function uniqueCarFormMapper(data: Car | null): CarFormValues {
+  return {
+    name: data?.name ?? '',
+    description: data?.description ?? '',
+    alcohol_consumption: data?.alcoholConsumption
+      ? String(data.alcoholConsumption)
+      : '',
+    gas_consumption: data?.gasConsumption ? String(data.gasConsumption) : '',
+  };
+}

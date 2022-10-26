@@ -14,7 +14,7 @@ import { CreateAndEditCarForm } from './CreateAndEditCarForm';
 
 import { Container, Content } from './styles';
 
-type TypePage = 'create' | 'edit' | '';
+export type TypePage = 'create' | 'edit' | '';
 
 export function CreateAndEditCar() {
   const route = useRoute();
@@ -58,20 +58,22 @@ export function CreateAndEditCar() {
     setType(route.params.from);
   }, [route.params, navigation]);
 
+  const prefixSubTitle = type === 'create' ? 'Cadastre' : 'Atualize';
+
   return (
     <Container>
       <HeaderBackButton />
       <Content>
         <Heading
           title={type === 'create' ? 'Cadastrar carro' : 'Atualizar carro'}
-          subTitle={
-            type === 'create'
-              ? `Cadastre seu carro em nosso sistema para realizar${'\n'}o cálculo do combustível`
-              : `Atualize seu carro em nosso sistema para realizar${'\n'}o cálculo do combustível`
-          }
+          subTitle={`${prefixSubTitle} seu carro em nosso sistema para realizar${'\n'}o cálculo do combustível`}
         />
 
-        {isLoadingCar ? <LoadingPage /> : <CreateAndEditCarForm car={car} />}
+        {isLoadingCar ? (
+          <LoadingPage />
+        ) : (
+          <CreateAndEditCarForm car={car} type={type} />
+        )}
       </Content>
     </Container>
   );
