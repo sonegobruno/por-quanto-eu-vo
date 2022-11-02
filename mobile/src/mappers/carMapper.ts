@@ -1,5 +1,6 @@
 import { Car } from 'entities/car/car';
 import { CarDTO, UniqueCarDTO } from 'entities/car/car.dto';
+import { SelectType } from 'shared/components/Form/Select';
 
 export function carMapper(data: CarDTO): Car[] {
   return data.cars.map(car => ({
@@ -35,4 +36,15 @@ export function uniqueCarFormMapper(data: Car | null): CarFormValues {
       : '',
     gas_consumption: data?.gasConsumption ? String(data.gasConsumption) : '',
   };
+}
+
+export function mapperCarToSelect(data: Car[] | undefined): SelectType[] {
+  if (!data) {
+    return [];
+  }
+
+  return data.map(dataMapped => ({
+    label: dataMapped.name,
+    value: String(dataMapped.id),
+  }));
 }

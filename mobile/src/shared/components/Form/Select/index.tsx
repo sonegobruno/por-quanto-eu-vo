@@ -6,12 +6,19 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { FormControl, Pressable, Input, IInputProps } from 'native-base';
+import {
+  FormControl,
+  Pressable,
+  Input,
+  IInputProps,
+  IFormControlProps,
+} from 'native-base';
 import { FieldError } from 'react-hook-form';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Footer } from '../Footer';
 import { Label } from '../Label';
 import { SelectModal } from './SelectModal';
+import { LoadingSelect } from './LoadingSelect';
 
 export type SelectType = {
   value: string | undefined;
@@ -25,6 +32,8 @@ interface Props extends IInputProps {
   error: FieldError | undefined;
   onChangeSelectValue: (value: SelectType['value']) => void;
   selectValue: SelectType['value'];
+  isLoading?: boolean;
+  containerProps?: IFormControlProps;
 }
 
 const SelectBase: ForwardRefRenderFunction<any, Props> = (
@@ -35,6 +44,8 @@ const SelectBase: ForwardRefRenderFunction<any, Props> = (
     error,
     onChangeSelectValue,
     selectValue,
+    isLoading = false,
+    containerProps,
     ...rest
   },
   ref,
@@ -52,36 +63,39 @@ const SelectBase: ForwardRefRenderFunction<any, Props> = (
 
   return (
     <>
-      <FormControl isInvalid={!!error?.message}>
+      <FormControl isInvalid={!!error?.message} {...containerProps}>
         {label && <Label>{label}</Label>}
-        <Pressable ref={finalRef} onPress={() => setOpenSelectModal(true)}>
-          {({ isFocused, isPressed }) => (
-            <Input
-              ref={ref as any}
-              isReadOnly
-              value={selectedlabel}
-              color="neutral.700"
-              bg="neutral.200"
-              borderRadius={6}
-              borderColor="neutral.300"
-              w="full"
-              h={`${RFValue(44)}px`}
-              fontSize="md"
-              placeholderTextColor="neutral.600"
-              isFocused={isPressed || isFocused}
-              _focus={{
-                borderColor: error ? 'error.500' : 'secondary.300',
-                borderWidth: 2,
-                bg: error ? 'error.200' : 'secondary.100',
-              }}
-              _invalid={{
-                borderColor: 'error.500',
-                borderWidth: 2,
-              }}
-              {...rest}
-            />
-          )}
-        </Pressable>
+        {!isLoading && (
+          <Pressable ref={finalRef} onPress={() => setOpenSelectModal(true)}>
+            {({ isFocused, isPressed }) => (
+              <Input
+                ref={ref as any}
+                isReadOnly
+                value={selectedlabel}
+                color="neutral.700"
+                bg="neutral.200"
+                borderRadius={6}
+                borderColor="neutral.300"
+                w="full"
+                h={`${RFValue(44)}px`}
+                fontSize="md"
+                placeholderTextColor="neutral.600"
+                isFocused={isPressed || isFocused}
+                _focus={{
+                  borderColor: error ? 'error.500' : 'secondary.300',
+                  borderWidth: 2,
+                  bg: error ? 'error.200' : 'secondary.100',
+                }}
+                _invalid={{
+                  borderColor: 'error.500',
+                  borderWidth: 2,
+                }}
+                {...rest}
+              />
+            )}
+          </Pressable>
+        )}
+        <LoadingSelect isLoading={isLoading} />
         <Footer error={error} />
       </FormControl>
 

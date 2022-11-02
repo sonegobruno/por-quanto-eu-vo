@@ -40,7 +40,7 @@ export function SelectModal({
   };
 
   return (
-    <Modal isOpen={openModal} onClose={() => onToggleModal(false)} size="full">
+    <Modal isOpen={openModal} onClose={() => onToggleModal(false)} size="lg">
       <Modal.Content>
         <Modal.CloseButton color="neutral.700" />
         <Modal.Header borderBottomWidth={0}>

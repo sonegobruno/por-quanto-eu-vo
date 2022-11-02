@@ -13,7 +13,9 @@ import { Button } from 'shared/components/Form/Buttons/Button';
 import { Input } from 'shared/components/Form/Inputs/Input';
 import { HeaderWithMenu } from 'shared/components/Headers/HeaderWithMenu';
 import { Heading } from 'shared/components/Heading';
-import { Select, SelectType } from 'shared/components/Form/Select';
+import { Select } from 'shared/components/Form/Select';
+import { useListMyCars } from 'services/react-query/hooks/listMyCars';
+import { mapperCarToSelect } from 'mappers/carMapper';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
@@ -22,12 +24,6 @@ type FormValues = {
   distance: string;
   gasAmount: string;
 };
-
-const MOCK_CARS: SelectType[] = [
-  { value: '1', label: 'car1' },
-  { value: '2', label: 'car2' },
-  { value: '3', label: 'car3' },
-];
 
 type DemandOptionsProps = 'Somente ida' | 'Bate e volta';
 
@@ -47,6 +43,7 @@ export function Home() {
     resolver: yupResolver(FormSchema),
   });
   const navigation = useNavigation();
+  const { data, isLoading } = useListMyCars();
 
   const [demandSelected, setDemandSelected] = useState<DemandOptionsProps | ''>(
     '',
@@ -99,14 +96,16 @@ export function Home() {
           }) => {
             return (
               <Select
-                label="Qual carro?"
-                modalTitle="Carros"
-                options={MOCK_CARS}
+                label="Qual carro irá viajar?"
+                modalTitle="Meus carros"
+                options={mapperCarToSelect(data)}
                 error={error}
                 ref={ref}
                 placeholder="Selecione o carro"
                 onChangeSelectValue={onChange}
                 selectValue={value}
+                isLoading={isLoading}
+                containerProps={{ mt: '4' }}
               />
             );
           }}
