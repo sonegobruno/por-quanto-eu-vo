@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
@@ -13,17 +13,26 @@ import { Button } from 'shared/components/Form/Buttons/Button';
 import { Input } from 'shared/components/Form/Inputs/Input';
 import { HeaderWithMenu } from 'shared/components/Headers/HeaderWithMenu';
 import { Heading } from 'shared/components/Heading';
+import { Select, SelectType } from 'shared/components/Form/Select';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
 type FormValues = {
+  car: string;
   distance: string;
   gasAmount: string;
 };
 
+const MOCK_CARS: SelectType[] = [
+  { value: '1', label: 'car1' },
+  { value: '2', label: 'car2' },
+  { value: '3', label: 'car3' },
+];
+
 type DemandOptionsProps = 'Somente ida' | 'Bate e volta';
 
 const FormSchema = yup.object().shape({
+  car: yup.string().required('Carro obrigatório'),
   distance: yup.string().required('Distância obrigatória'),
   gasAmount: yup.string().required('Valor do combustível obrigatório'),
 });
@@ -81,6 +90,28 @@ export function Home() {
           subTitle={`Descubra o valor de combustível gasto ${'\n'}com facilidade`}
         />
 
+        <Controller
+          control={form.control}
+          name="car"
+          render={({
+            field: { onChange, value, ref },
+            fieldState: { error },
+          }) => {
+            return (
+              <Select
+                label="Qual carro?"
+                modalTitle="Carros"
+                options={MOCK_CARS}
+                error={error}
+                ref={ref}
+                placeholder="Selecione o carro"
+                onChangeSelectValue={onChange}
+                selectValue={value}
+              />
+            );
+          }}
+        />
+
         <Input
           label="Distância a ser percorrida (km)"
           placeholder="Digite a distância"
@@ -90,7 +121,6 @@ export function Home() {
           }}
           keyboardType="phone-pad"
           returnKeyType="next"
-          containerProps={{ mt: '4' }}
           onSubmitEditing={() => form.setFocus('gasAmount')}
         />
 

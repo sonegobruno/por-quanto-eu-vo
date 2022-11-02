@@ -9,8 +9,8 @@ import {
 import { Control, Controller } from 'react-hook-form';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { TogglePassword } from './TogglePassword';
-import { Footer } from '../Footer';
-import { Label } from '../Label';
+import { Footer } from '../../Footer';
+import { Label } from '../../Label';
 
 interface ControllerProps
   extends Omit<React.ComponentProps<typeof Controller>, 'render'> {
