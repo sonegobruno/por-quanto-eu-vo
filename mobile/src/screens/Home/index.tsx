@@ -16,11 +16,16 @@ import { Heading } from 'shared/components/Heading';
 import { Select } from 'shared/components/Form/Select';
 import { useListMyCars } from 'services/react-query/hooks/listMyCars';
 import { mapperCarToSelect } from 'mappers/carMapper';
+import {
+  ToggleButton,
+  ToggleButtonItem,
+} from 'shared/components/Form/ToggleButton';
 import * as S from './styles';
 import { DemandWrapper } from './DemandWrapper';
 
 type FormValues = {
   car: string;
+  fuel: 'alcoholConsumption' | 'gasConsumption';
   distance: string;
   gasAmount: string;
 };
@@ -29,9 +34,15 @@ type DemandOptionsProps = 'Somente ida' | 'Bate e volta';
 
 const FormSchema = yup.object().shape({
   car: yup.string().required('Carro obrigatório'),
+  fuel: yup.string().required('Combustível obrigatório'),
   distance: yup.string().required('Distância obrigatória'),
   gasAmount: yup.string().required('Valor do combustível obrigatório'),
 });
+
+const FUEL_OPTIONS: ToggleButtonItem<FormValues['fuel']>[] = [
+  { value: 'gasConsumption', label: 'Gasolina' },
+  { value: 'alcoholConsumption', label: 'Álcool' },
+];
 
 const DEMAND_OPTIONS = {
   'Somente ida': 1,
@@ -106,6 +117,22 @@ export function Home() {
                 selectValue={value}
                 isLoading={isLoading}
                 containerProps={{ mt: '4' }}
+              />
+            );
+          }}
+        />
+
+        <Controller
+          control={form.control}
+          name="fuel"
+          render={({ field: { onChange, value }, fieldState: { error } }) => {
+            return (
+              <ToggleButton
+                error={error}
+                label="Qual combustivel irá utilizar?"
+                onChangeValue={onChange}
+                value={value}
+                options={FUEL_OPTIONS}
               />
             );
           }}
