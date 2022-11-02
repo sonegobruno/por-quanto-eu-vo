@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { AppError } from 'shared/error/AppError';
 
 interface ErrorResponse {
   message: string;
@@ -26,6 +27,14 @@ export function apiResponseErrors(error: unknown): ErrorResponse {
     if (!hasKey('message', axiosError.response.data)) return IMPREVIOULY_ERROR;
 
     return axiosError.response.data;
+  }
+
+  if (error instanceof AppError) {
+    console.error('App error ->', error);
+    return {
+      message: error.message,
+      field: error.field,
+    };
   }
 
   console.error('Internal Error ->', error);

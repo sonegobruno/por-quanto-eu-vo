@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigation } from '@react-navigation/native';
 
 import { formatMoneyToNumber } from 'shared/utils/formatData';
-import { AVERAGE_FUEL_CONSUMPTION } from 'shared/contants/averageFuelConsumption';
 
 import { InputMask } from 'shared/components/Form/Inputs/InputMask';
 import { StatusBar } from 'shared/components/StatusBar';
@@ -20,23 +19,29 @@ import {
   ToggleButton,
   ToggleButtonItem,
 } from 'shared/components/Form/ToggleButton';
+import { apiResponseErrors } from 'shared/utils/apiResponseErrors';
+import { useToast } from 'native-base';
+import { toastConfig } from 'shared/components/Toast';
+import { AppError } from 'shared/error/AppError';
+import { isKey, toNumber } from 'shared/types/utils';
 import * as S from './styles';
-import { DemandWrapper } from './DemandWrapper';
 
 type FormValues = {
   car: string;
   fuel: 'alcoholConsumption' | 'gasConsumption';
   distance: string;
   gasAmount: string;
+  demand: 'justGoing' | 'goingAndBacking';
 };
-
-type DemandOptionsProps = 'Somente ida' | 'Bate e volta';
 
 const FormSchema = yup.object().shape({
   car: yup.string().required('Carro obrigatório'),
   fuel: yup.string().required('Combustível obrigatório'),
   distance: yup.string().required('Distância obrigatória'),
   gasAmount: yup.string().required('Valor do combustível obrigatório'),
+  demand: yup
+    .string()
+    .required('opsss, você esqueceu de selecionar uma cobrança'),
 });
 
 const FUEL_OPTIONS: ToggleButtonItem<FormValues['fuel']>[] = [
@@ -44,48 +49,64 @@ const FUEL_OPTIONS: ToggleButtonItem<FormValues['fuel']>[] = [
   { value: 'alcoholConsumption', label: 'Álcool' },
 ];
 
-const DEMAND_OPTIONS = {
-  'Somente ida': 1,
-  'Bate e volta': 2,
-};
+// eslint-disable-next-line no-shadow
+enum DEMAND_OPTIONS_ENUM {
+  justGoing = 1,
+  goingAndBacking = 2,
+}
+
+const DEMAND_OPTIONS: ToggleButtonItem<FormValues['demand']>[] = [
+  { value: 'justGoing', label: 'Somente ida' },
+  { value: 'goingAndBacking', label: 'Bate e volta' },
+];
 
 export function Home() {
+  const toast = useToast();
   const form = useForm<FormValues>({
     resolver: yupResolver(FormSchema),
   });
   const navigation = useNavigation();
   const { data, isLoading } = useListMyCars();
 
-  const [demandSelected, setDemandSelected] = useState<DemandOptionsProps | ''>(
-    '',
-  );
-  const [showDemandError, setShowDemandError] = useState(false);
-
-  useEffect(() => {
-    if (demandSelected !== '') {
-      setShowDemandError(false);
-    }
-  }, [demandSelected]);
-
   const handleSumValues = useCallback(
-    ({ distance, gasAmount }: FormValues) => {
-      if (demandSelected === '') {
-        setShowDemandError(true);
-        return;
+    (formData: FormValues) => {
+      const { distance, gasAmount, car, demand, fuel } = formData;
+      try {
+        const formattedGasAmount = formatMoneyToNumber(gasAmount, 'gasAmount');
+        const carSelected = data?.find(dataMapped => dataMapped.id === car);
+
+        if (!carSelected) {
+          throw new AppError('Carro não encontrado', 'car');
+        }
+
+        const fuelFromCarSelected = carSelected[fuel];
+
+        const spentGasLitens =
+          toNumber(distance, 'distance') / fuelFromCarSelected;
+
+        const spentAmount =
+          spentGasLitens * formattedGasAmount * DEMAND_OPTIONS_ENUM[demand];
+
+        navigation.navigate('GasPriceShow', {
+          amountCurrency: spentAmount,
+        });
+      } catch (err) {
+        const error = apiResponseErrors(err);
+        toast.show(toastConfig(error.message, 'error'));
+        if (isKey<keyof FormValues>(error.field, Object.keys(formData))) {
+          form.setError(
+            error.field,
+            {
+              message: error.message,
+            },
+            {
+              shouldFocus: true,
+            },
+          );
+        }
       }
-
-      const formattedGasAmount = formatMoneyToNumber(gasAmount);
-
-      const spentGasLitens = Number(distance) / AVERAGE_FUEL_CONSUMPTION;
-
-      const spentAmount =
-        spentGasLitens * formattedGasAmount * DEMAND_OPTIONS[demandSelected];
-
-      navigation.navigate('GasPriceShow', {
-        amountCurrency: spentAmount,
-      });
     },
-    [demandSelected, navigation],
+    [data, navigation, toast, form],
   );
 
   return (
@@ -160,17 +181,27 @@ export function Home() {
           maskType="money"
         />
 
-        <DemandWrapper
-          demandSelected={demandSelected}
-          onChangeDemandSelected={setDemandSelected}
-          showError={showDemandError}
+        <Controller
+          control={form.control}
+          name="demand"
+          render={({ field: { onChange, value }, fieldState: { error } }) => {
+            return (
+              <ToggleButton
+                error={error}
+                label="Como cobrar?"
+                onChangeValue={onChange}
+                value={value}
+                options={DEMAND_OPTIONS}
+              />
+            );
+          }}
         />
 
         <Button
           title="Somar valores"
           onPress={form.handleSubmit(handleSumValues)}
           testID="sum-values-button"
-          mt="12"
+          mt="4"
         />
       </S.Container>
     </>

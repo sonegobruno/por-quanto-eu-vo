@@ -1,8 +1,10 @@
 import { MaskService, TextInputMaskOptionProp } from 'react-native-masked-text';
+import { toNumber } from 'shared/types/utils';
 
-export const formatMoneyToNumber = (money: string): number => {
+export const formatMoneyToNumber = (money: string, field = ''): number => {
   const moneyWithoutMask = money.replace(/\D/g, '');
-  return Number(moneyWithoutMask) / 100;
+
+  return toNumber(moneyWithoutMask, field) / 100;
 };
 
 export function formatCurrency(

@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useToast } from 'native-base';
 import { Car } from 'entities/car/car';
 import { CarFormValues, uniqueCarFormMapper } from 'mappers/carMapper';
+import { isKey, toNumber } from 'shared/types/utils';
 import { TypePage } from '..';
 
 const FormSchema = yup.object().shape({
@@ -37,7 +38,14 @@ export function CreateAndEditCarForm({ car, type }: Props) {
 
   const mutationCreateCar = useMutation(
     async (data: CarFormValues) => {
-      return api.post('/car', data);
+      return api.post('/car', {
+        ...data,
+        alcohol_consumption: toNumber(
+          data.alcohol_consumption,
+          'alcohol_consumption',
+        ),
+        gas_consumption: toNumber(data.gas_consumption, 'gas_consumption'),
+      });
     },
     {
       onSuccess() {
@@ -49,9 +57,21 @@ export function CreateAndEditCarForm({ car, type }: Props) {
 
         navigation.goBack();
       },
-      onError(err) {
+      onError(err, data) {
         const error = apiResponseErrors(err);
         toast.show(toastConfig(error.message, 'error'));
+
+        if (isKey<keyof CarFormValues>(error.field, Object.keys(data))) {
+          form.setError(
+            error.field,
+            {
+              message: error.message,
+            },
+            {
+              shouldFocus: true,
+            },
+          );
+        }
       },
     },
   );
@@ -59,10 +79,15 @@ export function CreateAndEditCarForm({ car, type }: Props) {
   const mutationUpdateCar = useMutation(
     async (data: CarFormValues) => {
       return api.put('/car', {
+        ...data,
         id: car?.id,
         image_url: '',
         image_description: '',
-        ...data,
+        alcohol_consumption: toNumber(
+          data.alcohol_consumption,
+          'alcohol_consumption',
+        ),
+        gas_consumption: toNumber(data.gas_consumption, 'gas_consumption'),
       });
     },
     {
@@ -78,9 +103,21 @@ export function CreateAndEditCarForm({ car, type }: Props) {
 
         navigation.goBack();
       },
-      onError(err) {
+      onError(err, data) {
         const error = apiResponseErrors(err);
         toast.show(toastConfig(error.message, 'error'));
+
+        if (isKey<keyof CarFormValues>(error.field, Object.keys(data))) {
+          form.setError(
+            error.field,
+            {
+              message: error.message,
+            },
+            {
+              shouldFocus: true,
+            },
+          );
+        }
       },
     },
   );
