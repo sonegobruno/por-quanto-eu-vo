@@ -30,11 +30,11 @@ export class CreateCars1664469335990 implements MigrationInterface {
                 },
                 {
                   name: "alcohol_consumption",
-                  type: "int"
+                  type: "float"
                 },
                 {
                   name: "gas_consumption",
-                  type: "int"
+                  type: "float"
                 },
                 {
                   name: "user_id",
