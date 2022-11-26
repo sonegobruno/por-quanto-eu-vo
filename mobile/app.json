@@ -22,7 +22,13 @@
     ],
     "ios": {
       "bundleIdentifier": "com.sonego.porquantoeuvou"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "eb931acb-7c77-4d0e-a9cb-9c7f870a2b9b"
+      }
+    },
+    "plugins": ["expo-community-flipper"]
   },
   "name": "PorQuantoEuVo"
 }

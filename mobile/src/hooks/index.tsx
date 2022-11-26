@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { AuthProvider } from './auth';
 
-const AppHooksProvider: React.FC = React.memo(({ children }) => {
+interface Props {
+  children: ReactNode;
+}
+
+const AppHooksProvider: React.FC<Props> = React.memo(({ children }) => {
   return <AuthProvider>{children}</AuthProvider>;
 });
 
