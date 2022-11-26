@@ -81,7 +81,6 @@ export function SelectModal({
               </NativeButton>
             ))}
           </NativeButton.Group>
-          ;
         </Modal.Body>
         <Modal.Footer justifyContent="center" borderTopWidth={0}>
           <Button onPress={handleSelectOption} w="60%" title="Selecionar" />

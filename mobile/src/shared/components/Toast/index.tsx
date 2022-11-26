@@ -39,6 +39,6 @@ function Toast({ title, type }: Props) {
 export function toastConfig(title: string, type: Type): InterfaceToastProps {
   return {
     render: () => <Toast title={title} type={type} />,
-    placement: 'top-right',
+    placement: 'top',
   };
 }
