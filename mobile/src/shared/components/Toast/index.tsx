@@ -29,7 +29,7 @@ function Toast({ title, type }: Props) {
       : 'info';
 
   return (
-    <Box bg={bg} flexDir="row" w="100%" px="3" py="2" rounded="sm" mb={5}>
+    <Box bg={bg} flexDir="row" w="100%" px="3" py="4" rounded="sm">
       <Icon as={<Feather name={icon} />} size={5} mr="2" color="neutral.100" />
       <Text color="neutral.100">{title}</Text>
     </Box>
@@ -39,6 +39,6 @@ function Toast({ title, type }: Props) {
 export function toastConfig(title: string, type: Type): InterfaceToastProps {
   return {
     render: () => <Toast title={title} type={type} />,
-    placement: 'top',
+    placement: 'top-right',
   };
 }
