@@ -12,7 +12,14 @@ interface Props {
 export function CarCard({ car }: Props) {
   return (
     <View px="3" py="4" w="full" position="relative">
-      <Text fontSize="lg" color="neutral.700" maxW={`${RFValue(224)}px`} bold>
+      <Text
+        fontSize="lg"
+        color="neutral.700"
+        maxW={`${RFValue(224)}px`}
+        bold
+        isTruncated
+        noOfLines={2}
+      >
         {car.name}
       </Text>
       <Text mt="3" color="neutral.600">
