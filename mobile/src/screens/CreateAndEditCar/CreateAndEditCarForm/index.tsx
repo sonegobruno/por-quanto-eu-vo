@@ -16,11 +16,34 @@ import { CarFormValues, uniqueCarFormMapper } from 'mappers/carMapper';
 import { isKey, toNumber } from 'shared/types/utils';
 import { TypePage } from '..';
 
+const MAX_LENGTH = 75;
+
 const FormSchema = yup.object().shape({
-  name: yup.string().required('Nome obrigatório'),
-  description: yup.string().required('Descrição obrigatória'),
-  gas_consumption: yup.string().required('Gasolina obrigatória'),
-  alcohol_consumption: yup.string().required('Álcool obrigatório'),
+  name: yup
+    .string()
+    .required('Nome obrigatório')
+    .max(MAX_LENGTH, `Nome atingiu número máximo de ${MAX_LENGTH} caracteres`),
+  description: yup
+    .string()
+    .required('Descrição obrigatória')
+    .max(
+      MAX_LENGTH,
+      `Descrição atingiu número máximo de ${MAX_LENGTH} caracteres`,
+    ),
+  gas_consumption: yup
+    .string()
+    .required('Gasolina obrigatória')
+    .matches(
+      /^\d*\.?\d{0,1}$/g,
+      'Gasolina não é um número válido. Ex: 22.5, 22, 22.02',
+    ),
+  alcohol_consumption: yup
+    .string()
+    .required('Álcool obrigatório')
+    .matches(
+      /^\d*\.?\d{0,1}$/g,
+      'Álcool não é um número válido. Ex: 22.5, 22, 22.02',
+    ),
 });
 
 interface Props {
@@ -186,7 +209,7 @@ export function CreateAndEditCarForm({ car, type }: Props) {
         }}
         returnKeyType="next"
         keyboardType="phone-pad"
-        onSubmitEditing={() => form.setFocus('gas_consumption')}
+        onSubmitEditing={form.handleSubmit(handleCreateCar)}
       />
 
       <Button
