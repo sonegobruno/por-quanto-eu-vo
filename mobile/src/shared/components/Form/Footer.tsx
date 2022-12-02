@@ -15,6 +15,7 @@ export const Footer = ({ error }: Props) => {
         _text={{
           fontSize: RFValue(14),
           color: 'error.500',
+          lineHeight: 'xs',
         }}
       >
         {error?.message}
