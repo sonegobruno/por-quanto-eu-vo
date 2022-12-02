@@ -37,7 +37,13 @@ type FormValues = {
 const FormSchema = yup.object().shape({
   car: yup.string().required('Carro obrigatório'),
   fuel: yup.string().required('Combustível obrigatório'),
-  distance: yup.string().required('Distância obrigatória'),
+  distance: yup
+    .string()
+    .required('Distância obrigatória')
+    .matches(
+      /^\d*\.?\d{0,1}$/g,
+      'Distância não é um número válido. Ex: 22.5, 22, 22.02',
+    ),
   gasAmount: yup.string().required('Valor do combustível obrigatório'),
   demand: yup
     .string()
