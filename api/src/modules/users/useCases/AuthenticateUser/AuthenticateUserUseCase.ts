@@ -3,6 +3,9 @@ import { compare } from 'bcrypt';
 import { inject, injectable} from 'tsyringe';
 import { sign } from 'jsonwebtoken';
 import { AppError } from '../../../../errors';
+import { IUsersTokensRepository } from '../../../users-tokens/repository/IUsersTokensRepository';
+import { addDays } from 'date-fns';
+import authConfig from '../../../../config/auth'
 
 interface IRequest {
     email: string;
@@ -11,6 +14,7 @@ interface IRequest {
 
 interface IResponse {
     token: string;
+    refresh_token: string
 }
 
 @injectable()
@@ -18,7 +22,9 @@ class AuthenticateUserUseCase {
 
     constructor(
         @inject("UserRepository")
-        private userRepository: IUsersRepository
+        private userRepository: IUsersRepository,
+        @inject("UsersTokensRepository")
+        private usersTokensRepository: IUsersTokensRepository
     ){}
 
     public async execute({ email, password } : IRequest): Promise<IResponse> {
@@ -45,11 +51,23 @@ class AuthenticateUserUseCase {
 
         const token = sign({}, process.env.TOKEN_HASH, {
             subject: user.id,
-            expiresIn: "1d"
+            expiresIn: authConfig.tokenExpireTime
+        })
+
+        const refresh_token = sign({ email }, process.env.REFRESH_TOKEN_HASH, {
+          subject: user.id,
+          expiresIn: authConfig.refreshTokenExpireTime
+        })
+
+        await this.usersTokensRepository.create({
+          user_id: user.id,
+          expires_date: addDays(new Date(), authConfig.refreshTokenExpireInDays),
+          refresh_token: refresh_token
         })
 
         return {
-            token
+            token,
+            refresh_token
         }
     }
 }
