@@ -8,9 +8,9 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { api } from 'services/api';
+import { api, AxiosInterceptor } from 'services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AUTH_TOKEN_KEY } from 'constants/keys';
+import { AUTH_REFRESH_TOKEN_KEY, AUTH_TOKEN_KEY } from 'constants/keys';
 import { MeDTO } from 'entities/me/me.dto';
 import { Me } from 'entities/me/me';
 import { meMapper } from 'mappers/meMapper';
@@ -82,12 +82,13 @@ export const AuthProvider: React.FC<Props> = React.memo(({ children }) => {
   }, []);
 
   const signIn = useCallback(
-    async data => {
+    async (data: SignInCredentials) => {
       const {
-        data: { token },
+        data: { token, refresh_token },
       } = await api.post(`/sessions`, data);
 
       await AsyncStorage.setItem(AUTH_TOKEN_KEY, token);
+      await AsyncStorage.setItem(AUTH_REFRESH_TOKEN_KEY, refresh_token);
 
       getUserAuthenticate(token);
     },
@@ -97,6 +98,7 @@ export const AuthProvider: React.FC<Props> = React.memo(({ children }) => {
   const signOut = useCallback(async () => {
     setUser(null);
     await AsyncStorage.removeItem(AUTH_TOKEN_KEY);
+    await AsyncStorage.removeItem(AUTH_REFRESH_TOKEN_KEY);
     api.defaults.headers.common.Authorization = '';
   }, []);
 
@@ -117,7 +119,9 @@ export const AuthProvider: React.FC<Props> = React.memo(({ children }) => {
 
   return (
     <AuthContext.Provider value={dataProvider}>
-      <Children loadingUser={loadingUser}>{children}</Children>
+      <Children loadingUser={loadingUser}>
+        <AxiosInterceptor>{children}</AxiosInterceptor>
+      </Children>
     </AuthContext.Provider>
   );
 });

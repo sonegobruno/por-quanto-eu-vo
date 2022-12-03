@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { AppError } from 'shared/error/AppError';
+import { isObject } from 'shared/types/typeGuards';
 
 interface ErrorResponse {
   message: string;
@@ -13,9 +14,9 @@ const IMPREVIOULY_ERROR: ErrorResponse = {
 
 function hasKey<K extends string, T extends object>(
   key: K,
-  object: T,
+  object: unknown,
 ): object is T & Record<K | 'field', string> {
-  return key in object;
+  return isObject(object) && !!object && key in object;
 }
 
 export function apiResponseErrors(error: unknown): ErrorResponse {

@@ -8,7 +8,6 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { Input } from 'shared/components/Form/Inputs/Input';
 import { Button } from 'shared/components/Form/Buttons/Button';
 import { Center as Footer, Text, useToast } from 'native-base';
-import { api } from 'services/api';
 import { apiResponseErrors } from 'shared/utils/apiResponseErrors';
 import { toastConfig } from 'shared/components/Toast';
 import { useNavigation } from '@react-navigation/native';
@@ -45,7 +44,6 @@ export function Login() {
 
       try {
         await signIn(data);
-        await api.post('/sessions', data);
 
         toast.show(
           toastConfig(
