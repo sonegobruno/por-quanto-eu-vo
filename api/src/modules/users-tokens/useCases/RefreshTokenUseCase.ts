@@ -52,7 +52,7 @@ class RefreshTokenUseCase {
       await this.usersTokensRepository.create({
         user_id: user_id,
         expires_date: addDays(new Date(), authConfig.refreshTokenExpireInDays),
-        refresh_token: refresh_token
+        refresh_token: newRefreshToken
       })
 
       const token = sign({}, process.env.TOKEN_HASH, {
